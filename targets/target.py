@@ -1,5 +1,7 @@
 from abc import abstractmethod, ABC
 
+from model.model import Advertisement
+
 
 class Target(ABC):
 
@@ -8,5 +10,5 @@ class Target(ABC):
         pass
 
     @abstractmethod
-    def parse(self):
+    def parse(self, capture) -> list[Advertisement]:
         pass
