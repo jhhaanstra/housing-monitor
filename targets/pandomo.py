@@ -5,21 +5,33 @@ from model.model import Advertisement, Apartment
 from targets.target import Target
 
 
-class Pandomo(Target):
-
-    def request(self):
-        return requests.get('http://example.org/')
-
-    def get_advertisements(self) -> list[Advertisement]:
-        return []
-
-
 class Capture:
+
+    raw: str
     content: html.HtmlElement
 
     def __init__(self, content: str) -> None:
         super().__init__()
+        self.raw = content
         self.content = html.fromstring(content)
+
+
+class Pandomo(Target):
+
+    def request(self):
+        return requests.get('url')
+
+    def request_search_page(self) -> Capture:
+        response = requests.get("https://www.pandomo.nl/huurwoningen/")
+        return Capture(response.content.decode("utf-8"))
+
+    def request_advertisement_page(self, advertisement_id: str):
+        response = requests.get("https://www.pandomo.nl/huurwoningen/h/{}/".format(advertisement_id))
+        return Capture(response.content.decode("utf-8"))
+
+    def get_advertisements(self) -> list[Advertisement]:
+        return []
+
 
 
 class SearchExtractor:

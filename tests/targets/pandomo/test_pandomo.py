@@ -4,7 +4,7 @@ from importlib import resources
 from targets.pandomo import Capture, SearchExtractor
 
 
-class PandomoCaptureParsingTest(unittest.TestCase):
+class PandomoAdvertisementTest(unittest.TestCase):
 
     def test_should_get_nr_advertisements(self):
         capture = read_capture()
@@ -26,6 +26,10 @@ class PandomoCaptureParsingTest(unittest.TestCase):
         self.assertEquals(actual_apartment.postal_code, "9725GN")
         self.assertEquals(actual_apartment.city, "Groningen")
         self.assertEquals(actual_apartment.size, 78)
+
+
+class PandomoSearchTest(unittest.TestCase):
+    pass
 
 
 def read_capture() -> Capture:
