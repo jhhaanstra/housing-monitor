@@ -6,7 +6,7 @@ from targets.pandomo import Capture, SearchExtractor
 
 class PandomoCaptureParsingTest(unittest.TestCase):
 
-    def test_should_get_advertisements(self):
+    def test_should_get_nr_advertisements(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
         self.assertEquals(extractor.get_nr_advertisements(), 12)

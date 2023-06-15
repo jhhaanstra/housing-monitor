@@ -1,13 +1,26 @@
-import time
+#!/usr/bin/env python
 
-import requests
-from lxml import html
+from time import sleep
 
-r = requests.get('https://www.pandomo.nl/huurwoningen/')
-tree = html.fromstring(r.content)
-print(tree.xpath('//h1')[0].text)
+from targets.target import Target
 
-# Opening a file
-with open('capture_' + int(time.time()) + '.txt', 'w') as file:
-    file.writelines(r.content)
-    file.close()
+
+class Monitor:
+    interval: int
+    targets: list[Target]
+    running: bool
+
+    def __init__(self, interval, min_price, max_price, min_surface) -> None:
+        self.interval = interval
+        self.min_price = min_price
+        self.max_price = max_price
+        self.min_surface = min_surface
+        super().__init__()
+
+    def start(self) -> None:
+        self.running = True
+
+        while self.running:
+            sleep(self.interval)
+
+

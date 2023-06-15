@@ -10,7 +10,7 @@ class Pandomo(Target):
     def request(self):
         return requests.get('http://example.org/')
 
-    def parse(self, capture) -> list[Advertisement]:
+    def get_advertisements(self, capture) -> list[Advertisement]:
         return []
 
 
