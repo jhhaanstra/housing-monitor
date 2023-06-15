@@ -1,4 +1,7 @@
+import uuid
 from datetime import datetime
+from typing import Any
+from uuid import UUID
 
 
 class Apartment:
@@ -7,6 +10,9 @@ class Apartment:
     city: str
     size: int  # In m2
     energy: str
+
+    def __getattr__(self, name: str) -> Any:
+        return None
 
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, Apartment):
@@ -20,10 +26,19 @@ class Apartment:
 
 
 class Advertisement:
+
+    id: UUID
     url: str
     apartment: Apartment
     price: float
     date_fetched: datetime
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.id = uuid.uuid4()
+
+    def __getattr__(self, name: str) -> Any:
+        return None
 
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, Advertisement):

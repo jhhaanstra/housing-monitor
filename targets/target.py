@@ -23,5 +23,5 @@ class Target(ABC):
         super().__init__()
 
     @abstractmethod
-    def get_advertisements(self, capture) -> list[Advertisement]:
+    def get_advertisements(self) -> list[Advertisement]:
         pass
