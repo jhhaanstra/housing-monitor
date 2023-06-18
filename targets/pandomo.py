@@ -4,7 +4,7 @@ import requests
 from lxml import html
 
 from model.model import Advertisement, Apartment, AdvertisementState
-from targets.target import Target, Config
+from targets.target import Target, TargetConfig
 
 
 class Capture:
@@ -99,9 +99,12 @@ class Pandomo(Target):
     requestor: Requestor
     extractor: SearchExtractor
 
-    def __init__(self, config: Config, requestor: Requestor):
+    def __init__(self, config: TargetConfig, **kwargs):
         super().__init__(config)
-        self.requestor = requestor
+        if 'requestor' in kwargs:
+            self.requestor = kwargs['requestor']
+        else:
+            self.requestor = HttpRequestor()
 
     def get_advertisements(self) -> list[Advertisement]:
         capture: Capture = self.requestor.request_search_page()

@@ -5,7 +5,7 @@ import pytest
 
 from model.model import Advertisement, AdvertisementState
 from targets.pandomo import Capture, SearchExtractor, Pandomo, Requestor
-from targets.target import Config
+from targets.target import TargetConfig
 
 
 class PandomoSearchTest(unittest.TestCase):
@@ -37,8 +37,8 @@ class PandomoSearchTest(unittest.TestCase):
 
     @pytest.mark.skip("Live test")
     def test_pandomo_live(self):
-        config = Config(1500, 1000, 30)
-        pandomo = Pandomo(config, TestRequestor())
+        config = TargetConfig(1500, 1000, 30)
+        pandomo = Pandomo(config, requestor=TestRequestor())
         advertisements: list[Advertisement] = pandomo.get_advertisements()
 
         for advertisement in advertisements:

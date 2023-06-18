@@ -3,7 +3,7 @@ from abc import abstractmethod, ABC
 from model.model import Advertisement
 
 
-class Config:
+class TargetConfig:
     min_price: int
     max_price: int
     min_surface: int
@@ -16,9 +16,9 @@ class Config:
 
 
 class Target(ABC):
-    config: Config
+    config: TargetConfig
 
-    def __init__(self, config: Config) -> None:
+    def __init__(self, config: TargetConfig) -> None:
         self.config = config
         super().__init__()
 

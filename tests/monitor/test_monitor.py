@@ -1,8 +1,8 @@
 import unittest
 
 from model.model import Advertisement, Apartment
-from monitor.main import Monitor
-from targets.target import Target, Config
+from main import Monitor
+from targets.target import Target, TargetConfig
 
 
 class MonitorTest(unittest.TestCase):
@@ -37,7 +37,7 @@ class StaticTarget(Target):
     advertisements: list[Advertisement]
 
     def __init__(self, advertisements: list[Advertisement]) -> None:
-        super().__init__(Config(0, 0, 0))
+        super().__init__(TargetConfig(0, 0, 0))
         self.advertisements = advertisements
 
     def get_advertisements(self) -> list[Advertisement]:

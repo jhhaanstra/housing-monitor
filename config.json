@@ -1,0 +1,12 @@
+{
+  "target_config": {
+    "min_price": 500,
+    "max_price": 1000,
+    "min_surface": 30
+  },
+
+  "monitor_config": {
+    "interval": 2,
+    "targets": [ "pandomo" ]
+  }
+}
