@@ -1,7 +1,14 @@
 import uuid
 from datetime import datetime
+from enum import Enum
 from typing import Any
 from uuid import UUID
+
+
+class AdvertisementState(Enum):
+    AVAILABLE = 1
+    UNDER_OPTION = 2
+    UNAVAILABLE = 3
 
 
 class Apartment:
@@ -9,7 +16,6 @@ class Apartment:
     postal_code: str
     city: str
     size: int  # In m2
-    energy: str
 
     def __getattr__(self, name: str) -> Any:
         return None
@@ -21,8 +27,7 @@ class Apartment:
         return self.address == o.address and \
             self.postal_code == o.postal_code and \
             self.city == o.city and \
-            self.size == o.size and \
-            self.energy == o.energy
+            self.size == o.size
 
 
 class Advertisement:
@@ -30,8 +35,9 @@ class Advertisement:
     id: UUID
     url: str
     apartment: Apartment
-    price: float
+    price: str
     date_fetched: datetime
+    state: AdvertisementState
 
     def __init__(self) -> None:
         super().__init__()
@@ -47,4 +53,5 @@ class Advertisement:
         return self.url == o.url and \
             self.apartment == o.apartment and \
             self.price == o.price and \
-            self.date_fetched == o.date_fetched
+            self.date_fetched == o.date_fetched and \
+            self.state == o.state
