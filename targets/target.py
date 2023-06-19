@@ -9,18 +9,21 @@ class TargetConfig:
     min_surface: int
 
     def __init__(self, min_price, max_price, min_surface) -> None:
+        super().__init__()
         self.min_price = min_price
         self.max_price = max_price
         self.min_surface = min_surface
-        super().__init__()
 
 
 class Target(ABC):
-    config: TargetConfig
 
-    def __init__(self, config: TargetConfig) -> None:
-        self.config = config
+    config: TargetConfig
+    name: str
+
+    def __init__(self, config: TargetConfig, name: str) -> None:
         super().__init__()
+        self.config = config
+        self.name = name
 
     @abstractmethod
     def get_advertisements(self) -> list[Advertisement]:

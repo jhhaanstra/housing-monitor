@@ -100,7 +100,7 @@ class Pandomo(Target):
     extractor: SearchExtractor
 
     def __init__(self, config: TargetConfig, **kwargs):
-        super().__init__(config)
+        super().__init__(config, 'pandomo')
         if 'requestor' in kwargs:
             self.requestor = kwargs['requestor']
         else:

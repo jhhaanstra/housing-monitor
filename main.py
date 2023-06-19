@@ -12,7 +12,7 @@ def setup_monitor(config_path: str):
         if 'monitor_config' in config:
             target_config = TargetConfig(**config['target_config'])
             monitor = Monitor(target_config=target_config, **config['monitor_config'])
-            monitor.run()
+            monitor.start()
 
 
 if __name__ == '__main__':
