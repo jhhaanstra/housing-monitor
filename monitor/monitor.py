@@ -1,5 +1,4 @@
 from time import sleep
-from uuid import UUID
 
 from model.model import Advertisement
 from targets.pandomo import Pandomo
@@ -20,7 +19,7 @@ class TargetBuilder:
 class Monitor:
     interval: int
     targets: list[Target]
-    stored: {Target: list[UUID]}
+    stored: {Target: list[str]}
 
     def __init__(self, interval, targets, target_config) -> None:
         super().__init__()
@@ -39,8 +38,8 @@ class Monitor:
 
         for target in self.targets:
             for ad in target.get_advertisements():
-                if ad.id not in self.stored[target]:
-                    self.stored[target].append(ad.id)
+                if ad.url not in self.stored[target]:
+                    self.stored[target].append(ad.url)
                     results.append(ad)
 
         return results

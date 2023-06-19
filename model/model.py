@@ -32,16 +32,11 @@ class Apartment:
 
 class Advertisement:
 
-    id: UUID
     url: str
     apartment: Apartment
     price: str
     date_fetched: datetime
     state: AdvertisementState
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.id = uuid.uuid4()
 
     def __getattr__(self, name: str) -> Any:
         return None
