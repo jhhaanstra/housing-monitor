@@ -4,7 +4,7 @@ import pytest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.kpmakelaars import SearchExtractor, Requestor, Capture, Pararius
+from targets.kpmakelaars import SearchExtractor, Requestor, Capture, KpMakelaars
 from targets.target import TargetConfig
 
 
@@ -40,7 +40,7 @@ class KpMakelaarsSearchTest(unittest.TestCase):
     @pytest.mark.skip("Live test")
     def test_pararius_live(self):
         config = TargetConfig(1400, 1000, 30)
-        pararius = Pararius(config, requestor=TestRequestor())
+        pararius = KpMakelaars(config, requestor=TestRequestor())
         advertisements: list[Advertisement] = pararius.get_advertisements()
 
         for advertisement in advertisements:
