@@ -1,10 +1,10 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 
 import requests
 from lxml import html
 
-from model.model import Advertisement, Apartment, AdvertisementState
-from targets.target import Target, TargetConfig
+from model.model import Advertisement, AdvertisementState, Apartment
+from targets.target import TargetConfig, Target
 
 
 class Capture:
@@ -27,23 +27,24 @@ class Requestor(ABC):
 class HttpRequestor(Requestor):
 
     def request_search_page(self, config: TargetConfig) -> Capture:
-        url = "https://www.pararius.com/apartments/groningen/{min_price}-{max_price}/{size}m2".format(
-            min_price=config.min_price,
-            max_price=config.max_price,
-            size=config.min_surface
-        )
-        response = requests.get(url)
+        # url = "https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC{min_price}&max-price=%E2%82%AC{max_price}&min-area={size}+m%C2%B2".format(
+        #     max_price=self._format_number(config.max_price),
+        #     min_price=self._format_number(config.min_price),
+        #     size=config.min_surface
+        # )
+        response = requests.get("https://dcwonen.nl/te-huur/")
         return Capture(response.content.decode("utf-8"))
+
+    def _format_number(self, nr: int) -> str:
+        return f'{nr:,}'
 
 
 class SearchExtractor:
-    BASE_URL = "https://www.pararius.com"
-    _ADVERTISEMENT_BASE = "//ul[@class='search-list']/li/section"
-    _ADVERTISEMENT_TITLE_URL = "./h2/a"
-    _ADVERTISEMENT_DESCRIPTION = "./div[contains(@class, 'sub-title')]"
-    _ADVERTISEMENT_PRICE = "./div[contains(@class, 'price')]"
-    _ADVERTISEMENT_LABEL = "./div[contains(@class, 'label')]/span"
-    _ADVERTISEMENT_SPECS = "./div[contains(@class, 'features')]/ul/li[contains(@class, 'surface')]"
+    _ADVERTISEMENT_BASE = "//div[contains(@class, 'property-listing')]/div[@class='row']/div"
+    _ADVERTISEMENT_TITLE_URL = ".//h2/a"
+    _ADVERTISEMENT_ADDRESS = ".//address"
+    _ADVERTISEMENT_PRICE = "./div/div[2]//span[@class='item-price']"
+    _ADVERTISEMENT_LABEL = "./div/div[2]//span[1][contains(@class, 'label')]/a"
 
     capture: Capture
 
@@ -67,10 +68,9 @@ class SearchExtractor:
         else:
             title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
             advertisement = Advertisement()
-            advertisement.url = self.BASE_URL + title.attrib["href"]
+            advertisement.url = title.attrib["href"]
             advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.strip()
             advertisement.state = self._state_from_node(node)
-
             advertisement.apartment = self._apartment_from_node(node)
             return advertisement
 
@@ -82,33 +82,28 @@ class SearchExtractor:
         label: str = labels[0].text.lower().strip()
 
         match label:
-            case "rented under option":
-                return AdvertisementState.UNAVAILABLE
-            case _:
+            case "te huur":
                 return AdvertisementState.AVAILABLE
+            case _:
+                return AdvertisementState.UNAVAILABLE
 
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
-        description: str = node.xpath(self._ADVERTISEMENT_DESCRIPTION)[0].text.strip()
-        split: [str] = description.split(" ")
 
         title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
         apartment.address = title.text.strip()
-        apartment.postal_code = str.join("", split[0:2])
-
-        apartment.city = str.strip(str.join(" ", split[2::]).capitalize())
-        apartment.size = int(node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0])
+        apartment.city = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].text.strip()
 
         return apartment
 
 
-class Pararius(Target):
+class DcWonen(Target):
 
     requestor: Requestor
     extractor: SearchExtractor
 
     def __init__(self, config: TargetConfig, **kwargs):
-        super().__init__(config, 'pararius')
+        super().__init__(config, 'dcwonen')
         if 'requestor' in kwargs:
             self.requestor = kwargs['requestor']
         else:
