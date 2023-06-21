@@ -3,7 +3,10 @@ from time import sleep
 from notifypy import Notify
 
 from model.model import Advertisement
+from targets.dcwonen import DcWonen
+from targets.kpmakelaars import KpMakelaars
 from targets.pandomo import Pandomo
+from targets.pararius import Pararius
 from targets.target import Target, TargetConfig
 
 
@@ -14,6 +17,12 @@ class TargetBuilder:
         match target.lower():
             case 'pandomo':
                 return Pandomo(target_config)
+            case 'dcwonen':
+                return DcWonen(target_config)
+            case 'kpmakelaars':
+                return KpMakelaars(target_config)
+            case 'pararius':
+                return Pararius(target_config)
             case _:
                 raise ValueError(target + " is not a valid target, please update the config")
 
