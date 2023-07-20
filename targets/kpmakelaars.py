@@ -27,13 +27,8 @@ class Requestor(ABC):
 
 class HttpRequestor(Requestor):
 
-
     def request_search_page(self, config: TargetConfig) -> Capture:
-        search = "min_price={min_price}&max_price={max_price}&min_area={size}".format(
-            min_price=config.min_price,
-            max_price=config.max_price,
-            size=config.min_surface
-        )
+        search = self.build_search_query(config)
 
         response = requests.post('https://cdn.eazlee.com/eazlee/api/query_functions.php', data={
             "action": "all_locations",
@@ -45,6 +40,13 @@ class HttpRequestor(Requestor):
         })
 
         return Capture(response.content.decode("utf-8"))
+
+    def build_search_query(self, config: TargetConfig):
+        return "min_price={min_price}&max_price={max_price}&min_area={size}".format(
+            min_price=config.min_price,
+            max_price=config.max_price,
+            size=config.min_surface
+        )
 
 
 class SearchExtractor:

@@ -4,7 +4,7 @@ import pytest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.kpmakelaars import SearchExtractor, Requestor, Capture, KpMakelaars
+from targets.kpmakelaars import SearchExtractor, Requestor, Capture, KpMakelaars, HttpRequestor
 from targets.target import TargetConfig
 
 
@@ -36,6 +36,13 @@ class KpMakelaarsSearchTest(unittest.TestCase):
         self.assertEquals(advertisements[2].state, AdvertisementState.AVAILABLE)
         self.assertEquals(advertisements[3].state, AdvertisementState.AVAILABLE)
         self.assertEquals(advertisements[4].state, AdvertisementState.AVAILABLE)
+
+    def test_use_config_in_url(self):
+        config = TargetConfig(800, 1200, 30)
+        requestor = HttpRequestor()
+        url = requestor.build_search_query(config)
+        self.assertEquals("min_price=800&max_price=1200&min_area=30", url)
+
 
     @pytest.mark.skip("Live test")
     def test_pararius_live(self):
