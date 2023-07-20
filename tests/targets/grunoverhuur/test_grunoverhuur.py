@@ -4,7 +4,7 @@ import pytest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.grunoverhuur import SearchExtractor, Requestor, Capture, GrunoVerhuur
+from targets.grunoverhuur import SearchExtractor, Requestor, Capture, GrunoVerhuur, HttpRequestor
 from targets.target import TargetConfig
 
 
@@ -49,6 +49,12 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
             self.assertIsNotNone(actual_apartment.address)
             self.assertIsNotNone(actual_apartment.city)
             self.assertIsNotNone(actual_apartment.size)
+
+    def test_use_config_in_url(self):
+        config = TargetConfig(800, 1200, 30)
+        requestor = HttpRequestor()
+        url = requestor.build_search_url(config)
+        self.assertEquals("https://www.grunoverhuur.nl/huuraanbod/?search_property=&lang=nl&property_type=&property_area=30-1000&property_bedrooms=&property_city=Groningen&price_min=800%2C00&price_max=1200%2C00", url)
 
 
 class TestRequestor(Requestor):

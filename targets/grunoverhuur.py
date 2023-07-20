@@ -27,18 +27,16 @@ class Requestor(ABC):
 class HttpRequestor(Requestor):
 
     def request_search_page(self, config: TargetConfig) -> Capture:
-        url = "https://www.grunoverhuur.nl/huuraanbod/?search_property=&lang=nl&property_type=&property_area={size}-1000&property_bedrooms=&property_city=Groningen&price_min={min_price}%2C00&price_max={max_price}%2C00".format(
-            size=config.min_surface,
-            min_price=config.min_price,
-            max_price=config.max_price
-
-        )
+        url = self.build_search_url(config)
         response = requests.get(url)
         return Capture(response.content.decode("utf-8"))
 
-    def _format_number(self, nr: int) -> str:
-        return f'{nr:,}'
-
+    def build_search_url(self, config):
+        return "https://www.grunoverhuur.nl/huuraanbod/?search_property=&lang=nl&property_type=&property_area={size}-1000&property_bedrooms=&property_city=Groningen&price_min={min_price}%2C00&price_max={max_price}%2C00".format(
+            size=config.min_surface,
+            min_price=config.min_price,
+            max_price=config.max_price
+        )
 
 class SearchExtractor:
     _ADVERTISEMENT_BASE = "//div[preceding-sibling::h4[text()='Beschikbare woningen']]//div[contains(@id, 'property') and not(.//div[contains(@class, 'verhuurd')])]"

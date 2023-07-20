@@ -54,7 +54,6 @@ class DcWonenSearchTest(unittest.TestCase):
         self.assertEquals("https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC800&max-price=%E2%82%AC1,200&min-area=0+m%C2%B2&max-area=500+m%C2%B2", url)
 
 
-
 class TestRequestor(Requestor):
     def request_search_page(self, config: TargetConfig) -> Capture:
         return read_capture()
