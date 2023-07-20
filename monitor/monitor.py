@@ -1,9 +1,10 @@
 from time import sleep
 
-from notifypy import Notify
+import notifypy
 
 from model.model import Advertisement
 from targets.dcwonen import DcWonen
+from targets.grunoverhuur import GrunoVerhuur
 from targets.kpmakelaars import KpMakelaars
 from targets.pandomo import Pandomo
 from targets.pararius import Pararius
@@ -23,6 +24,8 @@ class TargetBuilder:
                 return KpMakelaars(target_config)
             case 'pararius':
                 return Pararius(target_config)
+            case 'gruno_verhuur':
+                return GrunoVerhuur(target_config)
             case _:
                 raise ValueError(target + " is not a valid target, please update the config")
 
@@ -59,7 +62,7 @@ class Monitor:
 
         print(title + " -- " + description)
 
-        notification = Notify()
+        notification = notifypy.Notify()
         notification.title = title
         notification.message = description
         notification.send()
