@@ -4,7 +4,7 @@ from importlib import resources
 import pytest
 
 from model.model import Advertisement, AdvertisementState
-from targets.pandomo import Capture, SearchExtractor, Pandomo, Requestor
+from targets.pandomo import Capture, SearchExtractor, Pandomo, Requestor, HttpRequestor
 from targets.target import TargetConfig
 
 
@@ -35,6 +35,12 @@ class PandomoSearchTest(unittest.TestCase):
         self.assertEquals(advertisements[8].state, AdvertisementState.UNDER_OPTION)
         self.assertEquals(advertisements[11].state, AdvertisementState.UNAVAILABLE)
 
+    def test_use_config_in_url(self):
+        config = TargetConfig(800, 1200, 30)
+        requestor = HttpRequestor()
+        url = requestor.build_search_url(config)
+        self.assertEquals("https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter[39]=800%2C1200&filter[43]=30%2C204", url)
+
     @pytest.mark.skip("Live test")
     def test_pandomo_live(self):
         config = TargetConfig(1500, 1000, 30)
@@ -54,7 +60,7 @@ class PandomoSearchTest(unittest.TestCase):
 
 
 class TestRequestor(Requestor):
-    def request_search_page(self) -> Capture:
+    def request_search_page(self, config: TargetConfig) -> Capture:
         return read_capture()
 
 

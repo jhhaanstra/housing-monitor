@@ -20,15 +20,23 @@ class Capture:
 class Requestor(ABC):
 
     @abstractmethod
-    def request_search_page(self) -> Capture:
+    def request_search_page(self, config: TargetConfig) -> Capture:
         pass
 
 
 class HttpRequestor(Requestor):
 
-    def request_search_page(self) -> Capture:
-        response = requests.get("https://www.pandomo.nl/huurwoningen/")
+    def request_search_page(self, config: TargetConfig) -> Capture:
+        url = self.build_search_url(config)
+        response = requests.get(url)
         return Capture(response.content.decode("utf-8"))
+
+    def build_search_url(self, config):
+        return "https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter[39]={min_price}%2C{max_price}&filter[43]={size}%2C204".format(
+            min_price=config.min_price,
+            max_price=config.max_price,
+            size=config.min_surface
+        )
 
 
 class SearchExtractor:
@@ -107,6 +115,6 @@ class Pandomo(Target):
             self.requestor = HttpRequestor()
 
     def get_advertisements(self) -> list[Advertisement]:
-        capture: Capture = self.requestor.request_search_page()
+        capture: Capture = self.requestor.request_search_page(self.config)
         extractor = SearchExtractor(capture)
         return extractor.get_advertisements()

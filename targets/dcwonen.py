@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 import requests
-import urllib3.util
 from lxml import html
 
 from model.model import Advertisement, AdvertisementState, Apartment
