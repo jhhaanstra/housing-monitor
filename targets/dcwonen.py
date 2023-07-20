@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 import requests
+import urllib3.util
 from lxml import html
 
 from model.model import Advertisement, AdvertisementState, Apartment
@@ -27,13 +28,17 @@ class Requestor(ABC):
 class HttpRequestor(Requestor):
 
     def request_search_page(self, config: TargetConfig) -> Capture:
-        # url = "https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC{min_price}&max-price=%E2%82%AC{max_price}&min-area={size}+m%C2%B2".format(
-        #     max_price=self._format_number(config.max_price),
-        #     min_price=self._format_number(config.min_price),
-        #     size=config.min_surface
-        # )
-        response = requests.get("https://dcwonen.nl/te-huur/")
+        response = requests.get(self.build_search_url(config))
         return Capture(response.content.decode("utf-8"))
+
+    """
+    Skip surface area because that seems broken.
+    """
+    def build_search_url(self, config: TargetConfig) -> str:
+        return "https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC{min_price}&max-price=%E2%82%AC{max_price}&min-area=0+m%C2%B2&max-area=500+m%C2%B2".format(
+            min_price=self._format_number(config.min_price),
+            max_price=self._format_number(config.max_price)
+        )
 
     def _format_number(self, nr: int) -> str:
         return f'{nr:,}'
