@@ -24,7 +24,7 @@ class TargetBuilder:
                 return KpMakelaars(target_config)
             case 'pararius':
                 return Pararius(target_config)
-            case 'gruno_verhuur':
+            case 'grunoverhuur':
                 return GrunoVerhuur(target_config)
             case _:
                 raise ValueError(target + " is not a valid target, please update the config")
