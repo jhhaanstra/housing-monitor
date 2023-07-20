@@ -27,13 +27,16 @@ class Requestor(ABC):
 class HttpRequestor(Requestor):
 
     def request_search_page(self, config: TargetConfig) -> Capture:
-        url = "https://www.pararius.com/apartments/groningen/{min_price}-{max_price}/{size}m2".format(
+        url = self.build_search_url(config)
+        response = requests.get(url)
+        return Capture(response.content.decode("utf-8"))
+
+    def build_search_url(self, config: TargetConfig) -> str:
+        return "https://www.pararius.com/apartments/groningen/{min_price}-{max_price}/{size}m2".format(
             min_price=config.min_price,
             max_price=config.max_price,
             size=config.min_surface
         )
-        response = requests.get(url)
-        return Capture(response.content.decode("utf-8"))
 
 
 class SearchExtractor:

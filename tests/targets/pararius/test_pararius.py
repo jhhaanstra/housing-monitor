@@ -4,7 +4,7 @@ import pytest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.pararius import SearchExtractor, Requestor, Capture, Pararius
+from targets.pararius import SearchExtractor, Requestor, Capture, Pararius, HttpRequestor
 from targets.target import TargetConfig
 
 
@@ -33,6 +33,13 @@ class ParariusSearchTest(unittest.TestCase):
         advertisements: list[Advertisement] = extractor.get_advertisements()
         self.assertEquals(advertisements[0].state, AdvertisementState.AVAILABLE)
         self.assertEquals(advertisements[6].state, AdvertisementState.UNAVAILABLE)
+
+    def test_use_config_in_url(self):
+        config = TargetConfig(800, 1200, 30)
+        requestor = HttpRequestor()
+        url = requestor.build_search_url(config)
+        self.assertEquals("https://www.pararius.com/apartments/groningen/800-1200/30m2", url)
+
 
     @pytest.mark.skip("Live test")
     def test_pararius_live(self):
