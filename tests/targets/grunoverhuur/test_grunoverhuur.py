@@ -15,16 +15,16 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
         extractor = SearchExtractor(capture)
         advertisements: list[Advertisement] = extractor.get_advertisements()
 
-        self.assertEquals(len(advertisements), 4)
+        self.assertEquals(len(advertisements), 10)
         actual = advertisements[0]
-        self.assertEquals(actual.url, "https://www.grunoverhuur.nl/woning/zuiderpark-18m-gerenoveerde-studio-met-slaapvide-in-monumentaal-pand/")
-        self.assertEquals(actual.price, "€933,00/mnd (incl.)")
+        self.assertEquals(actual.url, "https://www.grunoverhuur.nl/woningaanbod/huur/groningen/oosterweg/30-b")
+        self.assertEquals(actual.price, "€ 785,- /mnd")
         self.assertEquals(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEquals(actual_apartment.address, "Zuiderpark 18M")
-        self.assertEquals(actual_apartment.city, "Groningen")
-        self.assertEquals(actual_apartment.size, 30)
+        self.assertEquals(actual_apartment.address, "Oosterweg 30B, 9724CJ Groningen")
+        self.assertEquals(actual_apartment.city, "Groningen (probably)")
+        self.assertEquals(actual_apartment.size, 29)
 
     def test_should_get_states(self):
         capture = read_capture()
@@ -34,10 +34,10 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
         self.assertEquals(advertisements[0].state, AdvertisementState.AVAILABLE)
         self.assertEquals(advertisements[2].state, AdvertisementState.AVAILABLE)
 
-    @pytest.mark.skip("Live test")
+    # @pytest.mark.skip("Live test")
     def test_gruno_verhuur_live(self):
-        config = TargetConfig(1400, 1000, 30)
-        gruno_verhuur = GrunoVerhuur(config, requestor=TestRequestor())
+        config = TargetConfig(500, 1000, 30)
+        gruno_verhuur = GrunoVerhuur(config, requestor=HttpRequestor())
         advertisements: list[Advertisement] = gruno_verhuur.get_advertisements()
 
         for advertisement in advertisements:
@@ -54,7 +54,7 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
-        self.assertEquals("https://www.grunoverhuur.nl/huuraanbod/?search_property=&lang=nl&property_type=&property_area=30-1000&property_bedrooms=&property_city=Groningen&price_min=800%2C00&price_max=1200%2C00", url)
+        self.assertEquals("https://www.grunoverhuur.nl/woningaanbod/huur?moveunavailablelistingstothebottom=true&pricerange.maxprice=1200&pricerange.minprice=800", url)
 
 
 class TestRequestor(Requestor):

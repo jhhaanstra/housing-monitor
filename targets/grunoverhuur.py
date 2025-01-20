@@ -32,19 +32,18 @@ class HttpRequestor(Requestor):
         return Capture(response.content.decode("utf-8"))
 
     def build_search_url(self, config):
-        return "https://www.grunoverhuur.nl/huuraanbod/?search_property=&lang=nl&property_type=&property_area={size}-1000&property_bedrooms=&property_city=Groningen&price_min={min_price}%2C00&price_max={max_price}%2C00".format(
-            size=config.min_surface,
+        return "https://www.grunoverhuur.nl/woningaanbod/huur?moveunavailablelistingstothebottom=true&pricerange.maxprice={max_price}&pricerange.minprice={min_price}".format(
             min_price=config.min_price,
             max_price=config.max_price
         )
 
 class SearchExtractor:
-    _ADVERTISEMENT_BASE = "//div[preceding-sibling::h4[text()='Beschikbare woningen']]//div[contains(@id, 'property') and not(.//div[contains(@class, 'verhuurd')])]"
-    _ADVERTISEMENT_URL = ".//div[@class='footer-buttons']/a"
-    _ADVERTISEMENT_PRICE = ".//span[@class='price']"
-    _ADVERTISEMENT_SIZE = ".//span[@title='Oppervlakte']"
-    _ADVERTISEMENT_CITY = ".//div[@class='category']/span[last()]"
-    _ADVERTISEMENT_ADDRESS = ".//span[@class='location']/text()"
+    _ADVERTISEMENT_BASE = "//article//div[@class='datacontainer']"
+    _ADVERTISEMENT_URL = "./a"
+    _ADVERTISEMENT_PRICE = "./a//span[@class='obj_price']/text()"
+    _ADVERTISEMENT_SIZE = "./a//span[@title='Woonoppervlakte']/text()"
+    _ADVERTISEMENT_ADDRESS = "./a//h3/text()"
+    _BASE_URL = "https://www.grunoverhuur.nl"
 
     capture: Capture
 
@@ -63,18 +62,24 @@ class SearchExtractor:
 
     def _advertisement_from_node(self, node: html.HtmlElement) -> Advertisement:
         advertisement = Advertisement()
-        advertisement.url = node.xpath(self._ADVERTISEMENT_URL)[0].attrib["href"]
-        advertisement.price = "".join(node.xpath(".//span[@class='price']")[0].itertext()).strip()
+        advertisement.url = self._extract_url(node)
+        advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].strip()
         advertisement.state = AdvertisementState.AVAILABLE
         advertisement.apartment = self._apartment_from_node(node)
         return advertisement
 
+    def _extract_url(self, node: html.HtmlElement) -> str:
+        url: str = node.xpath(self._ADVERTISEMENT_URL)[0].attrib["href"]
+        url = url.split("?")[0]
+        return self._BASE_URL + url
+
+
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
 
-        apartment.address = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip()
-        apartment.city = node.xpath(self._ADVERTISEMENT_CITY)[0].text.strip()
-        size_text = "".join(node.xpath(self._ADVERTISEMENT_SIZE)[0].itertext()).strip()
+        apartment.address = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
+        apartment.city = "Groningen (probably)"
+        size_text = node.xpath(self._ADVERTISEMENT_SIZE)[0].strip()
         apartment.size = int(size_text.split(" ")[0])
 
         return apartment
