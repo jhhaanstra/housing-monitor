@@ -34,8 +34,8 @@ class DcWonenSearchTest(unittest.TestCase):
 
     @pytest.mark.skip("Live test")
     def test_dc_wonen_live(self):
-        config = TargetConfig(1400, 1000, 30)
-        dc_wonen = DcWonen(config, requestor=TestRequestor())
+        config = TargetConfig(500, 1000, 30)
+        dc_wonen = DcWonen(config, requestor=HttpRequestor())
         advertisements: list[Advertisement] = dc_wonen.get_advertisements()
 
         for advertisement in advertisements:

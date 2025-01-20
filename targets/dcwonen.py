@@ -27,7 +27,8 @@ class Requestor(ABC):
 class HttpRequestor(Requestor):
 
     def request_search_page(self, config: TargetConfig) -> Capture:
-        response = requests.get(self.build_search_url(config))
+        url = self.build_search_url(config)
+        response = requests.get(url)
         return Capture(response.content.decode("utf-8"))
 
     """
