@@ -17,7 +17,7 @@ class KpMakelaarsSearchTest(unittest.TestCase):
 
         self.assertEquals(len(advertisements), 5)
         actual = advertisements[0]
-        self.assertEquals(actual.url, "https://www.kpmakelaars.nl/woning?Groningen/Aweg/H00250255")
+        self.assertEquals(actual.url, "https://www.kpmakelaars.nl/woning/Groningen-Aweg-H00250255")
         self.assertEquals(actual.price, "€895,- \/mnd (incl)")
         self.assertEquals(actual.state, AdvertisementState.UNAVAILABLE)
 
@@ -46,9 +46,9 @@ class KpMakelaarsSearchTest(unittest.TestCase):
 
     @pytest.mark.skip("Live test")
     def test_pararius_live(self):
-        config = TargetConfig(1400, 1000, 30)
-        pararius = KpMakelaars(config, requestor=TestRequestor())
-        advertisements: list[Advertisement] = pararius.get_advertisements()
+        config = TargetConfig(500, 1000, 30)
+        kpmakelaars = KpMakelaars(config, requestor=HttpRequestor())
+        advertisements: list[Advertisement] = kpmakelaars.get_advertisements()
 
         for advertisement in advertisements:
             self.assertIsNotNone(advertisement.url)

@@ -59,7 +59,7 @@ class SearchExtractor:
 
     def _advertisement_from_node(self, advertisement) -> Advertisement:
         _advertisement = Advertisement()
-        _advertisement.url = "https://www.kpmakelaars.nl/woning?{city}/{street}/{id}".format(
+        _advertisement.url = "https://www.kpmakelaars.nl/woning/{city}-{street}-{id}".format(
             city=advertisement['city'],
             street=advertisement['street'],
             id=advertisement['house_id']
