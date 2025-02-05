@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import json
+import os
 
 from monitor.monitor import Monitor
 from targets.target import TargetConfig
@@ -12,6 +13,9 @@ def setup_monitor(config_path: str):
         if 'monitor_config' in config:
             target_config = TargetConfig(**config['target_config'])
             monitor = Monitor(target_config=target_config, **config['monitor_config'])
+            if os.path.isfile("advertisements.txt"):
+                with open("advertisements.txt") as file:
+                    monitor.stored = [line.rstrip() for line in file]
             monitor.start()
 
 

@@ -1,6 +1,6 @@
 from time import sleep
 
-import notifypy
+from notifypy import Notify
 
 from model.model import Advertisement
 from targets.dcwonen import DcWonen
@@ -33,13 +33,13 @@ class TargetBuilder:
 class Monitor:
     interval: int
     targets: list[Target]
-    stored: {Target: list[str]}
+    stored: list[str]
 
     def __init__(self, interval, targets, target_config) -> None:
         super().__init__()
         self.interval = interval
         self.targets = [TargetBuilder.build_target(target, target_config) for target in targets]
-        self.stored = {target: [] for target in targets}
+        self.stored = []
 
     def start(self) -> None:
         running = True
@@ -48,9 +48,12 @@ class Monitor:
             results: [Advertisement] = self.run()
             for advertisement in results:
                 self._send_notification(advertisement)
+                with open("advertisements.txt", "a") as f:
+                    f.write(advertisement.url)
                 sleep(self.interval)
 
-    def _send_notification(self, advertisement: Advertisement):
+    @staticmethod
+    def _send_notification(advertisement: Advertisement):
         title = "New advertisement found on: {target_name}.".format(
             target_name=advertisement.url
         )
@@ -62,7 +65,7 @@ class Monitor:
 
         print(title + " -- " + description)
 
-        notification = notifypy.Notify()
+        notification = Notify()
         notification.title = title
         notification.message = description
         notification.send()
@@ -72,8 +75,8 @@ class Monitor:
 
         for target in self.targets:
             for advertisement in target.get_advertisements():
-                if advertisement.url not in self.stored[target.name]:
-                    self.stored[target.name].append(advertisement.url)
+                if advertisement.url not in self.stored:
+                    self.stored.append(advertisement.url)
                     results.append(advertisement)
 
         return results

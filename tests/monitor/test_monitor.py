@@ -20,7 +20,7 @@ class MonitorTest(unittest.TestCase):
 
         advertisement = Advertisement()
         advertisement.url = "foo.bar"
-        advertisement.price = 123.45
+        advertisement.price = "123.45"
         advertisement.apartment = apartment
 
         apartment2 = Apartment()
@@ -29,14 +29,14 @@ class MonitorTest(unittest.TestCase):
 
         advertisement2 = Advertisement()
         advertisement2.url = "bar.baz"
-        advertisement2.price = 12.65
+        advertisement2.price = "12.65"
         advertisement2.apartment = apartment2
 
         static_target = StaticTarget([advertisement, advertisement2])
 
         monitor = Monitor(1, [], TargetConfig(1, 2, 3))
         monitor.targets = [static_target]
-        monitor.stored = {'static': []}
+        monitor.stored = []
 
         run1 = monitor.run()
         self.assertListEqual(run1, [advertisement, advertisement2])
@@ -44,6 +44,36 @@ class MonitorTest(unittest.TestCase):
         run2 = monitor.run()
         self.assertListEqual(run2, [])
 
+    def test_when_advertisement_stored_then_filter_out_of_results(self):
+        apartment = Apartment()
+        apartment.size = 100
+        apartment.city = "Amsterdam"
+
+        advertisement = Advertisement()
+        advertisement.url = "foo.bar"
+        advertisement.price = "123.45"
+        advertisement.apartment = apartment
+
+        apartment2 = Apartment()
+        apartment2.size = 200
+        apartment2.city = "Groningen"
+
+        advertisement2 = Advertisement()
+        advertisement2.url = "bar.baz"
+        advertisement2.price = "12.65"
+        advertisement2.apartment = apartment2
+
+        static_target = StaticTarget([advertisement, advertisement2])
+
+        monitor = Monitor(1, [], TargetConfig(1, 2, 3))
+        monitor.targets = [static_target]
+        monitor.stored = ["foo.bar"]
+
+        run1 = monitor.run()
+        self.assertListEqual(run1, [advertisement2])
+
+        run2 = monitor.run()
+        self.assertListEqual(run2, [])
 
 class TargetBuilderTest(unittest.TestCase):
 

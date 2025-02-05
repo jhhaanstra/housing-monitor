@@ -6,7 +6,7 @@
   },
 
   "monitor_config": {
-    "interval": 30,
-    "targets": [ "pandomo" ]
+    "interval": 1800,
+    "targets": [ "pandomo", "dcwonen" ]
   }
 }
