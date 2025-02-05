@@ -17,22 +17,22 @@ class ParariusSearchTest(unittest.TestCase):
 
         self.assertEquals(len(advertisements), 13)
         actual = advertisements[0]
-        self.assertEquals(actual.url, "https://www.pararius.com/apartment-for-rent/groningen/fed24a60/pelsterstraat")
-        self.assertEquals(actual.price, "€1,000 per month")
+        self.assertEquals(actual.url, "https://www.pararius.com/apartment-for-rent/groningen/cfbcf80e/nieuweweg")
+        self.assertEquals(actual.price, "€1,075 per month")
         self.assertEquals(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEquals(actual_apartment.address, "Flat Pelsterstraat")
-        self.assertEquals(actual_apartment.postal_code, "9711KM")
-        self.assertEquals(actual_apartment.city, "Groningen (binnenstad-zuid)")
-        self.assertEquals(actual_apartment.size, 47)
+        self.assertEquals(actual_apartment.address, "Flat Nieuweweg")
+        self.assertEquals(actual_apartment.postal_code, "9711TC")
+        self.assertEquals(actual_apartment.city, "Groningen (binnenstad-oost)")
+        self.assertEquals(actual_apartment.size, 32)
 
     def test_should_get_states(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
         advertisements: list[Advertisement] = extractor.get_advertisements()
         self.assertEquals(advertisements[0].state, AdvertisementState.AVAILABLE)
-        self.assertEquals(advertisements[6].state, AdvertisementState.UNAVAILABLE)
+        self.assertEquals(advertisements[4].state, AdvertisementState.UNAVAILABLE)
 
     def test_use_config_in_url(self):
         config = TargetConfig(800, 1200, 30)
@@ -43,8 +43,8 @@ class ParariusSearchTest(unittest.TestCase):
 
     @pytest.mark.skip("Live test")
     def test_pararius_live(self):
-        config = TargetConfig(1400, 1000, 30)
-        pararius = Pararius(config, requestor=TestRequestor())
+        config = TargetConfig(1000, 1400, 30)
+        pararius = Pararius(config, requestor=HttpRequestor())
         advertisements: list[Advertisement] = pararius.get_advertisements()
 
         for advertisement in advertisements:

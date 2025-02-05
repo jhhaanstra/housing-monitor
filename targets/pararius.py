@@ -42,11 +42,11 @@ class HttpRequestor(Requestor):
 class SearchExtractor:
     BASE_URL = "https://www.pararius.com"
     _ADVERTISEMENT_BASE = "//ul[@class='search-list']/li/section"
-    _ADVERTISEMENT_TITLE_URL = "./h2/a"
-    _ADVERTISEMENT_DESCRIPTION = "./div[contains(@class, 'sub-title')]"
-    _ADVERTISEMENT_PRICE = "./div[contains(@class, 'price')]"
+    _ADVERTISEMENT_TITLE_URL = ".//h2/a"
+    _ADVERTISEMENT_DESCRIPTION = "./div/div[contains(@class, 'sub-title')]"
+    _ADVERTISEMENT_PRICE = "./div/div[contains(@class, 'price')]"
     _ADVERTISEMENT_LABEL = "./div[contains(@class, 'label')]/span"
-    _ADVERTISEMENT_SPECS = "./div[contains(@class, 'features')]/ul/li[contains(@class, 'surface')]"
+    _ADVERTISEMENT_SPECS = "./div/div[contains(@class, 'features')]/ul/li[contains(@class, 'surface')]"
 
     capture: Capture
 
