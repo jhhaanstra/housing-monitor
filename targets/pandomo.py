@@ -32,7 +32,7 @@ class HttpRequestor(Requestor):
         return Capture(response.content.decode("utf-8"))
 
     def build_search_url(self, config):
-        return "https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter[39]={min_price}%2C{max_price}&filter[43]={size}%2C204".format(
+        return "https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter%5B39%5D={min_price}%2C{max_price}&filter[43]=19%2C{size}".format(
             min_price=config.min_price,
             max_price=config.max_price,
             size=config.min_surface
@@ -43,9 +43,9 @@ class SearchExtractor:
     BASE_URL = "https://www.pandomo.nl"
 
     _ADVERTISEMENT_BASE = "//li[@class='results__item']"
-    _ADVERTISEMENT_TITLE_URL = "./div/h3/a"
+    _ADVERTISEMENT_URL = ".//h3/a"
     _ADVERTISEMENT_DESCRIPTION = "./div/p"
-    _ADVERTISEMENT_PRICE = "./div/p/strong"
+    _ADVERTISEMENT_PRICE = "./div[@class='results__item__content']/p/strong"
     _ADVERTISEMENT_LABEL = "./a/div/*[contains(@class, 'image__label')]"
     _ADVERTISEMENT_SPECS = "./div/div[@class='results__item__info specs']/span[1]"
 
@@ -65,18 +65,13 @@ class SearchExtractor:
         return results
 
     def _advertisement_from_node(self, node: html.HtmlElement) -> Advertisement:
-        elements: list[html.HtmlElement] = node.xpath(self._ADVERTISEMENT_TITLE_URL)
-        if len(elements) == 0:
-            raise ValueError("Invalid advertisement node provided")
-        else:
-            title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
-            advertisement = Advertisement()
-            advertisement.url = self.BASE_URL + title.attrib["href"]
-            advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.replace(" ", "")
-            advertisement.state = self._state_from_node(node)
+        advertisement = Advertisement()
+        advertisement.url = self.BASE_URL + node.xpath(self._ADVERTISEMENT_URL)[0].attrib["href"]
+        advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
+        advertisement.state = self._state_from_node(node)
 
-            advertisement.apartment = self._apartment_from_node(node)
-            return advertisement
+        advertisement.apartment = self._apartment_from_node(node)
+        return advertisement
 
     def _state_from_node(self, node: html.HtmlElement) -> AdvertisementState:
         label: str = node.xpath(self._ADVERTISEMENT_LABEL)[0].text.lower()
@@ -93,7 +88,8 @@ class SearchExtractor:
         description: str = node.xpath(self._ADVERTISEMENT_DESCRIPTION)[0].text.replace("\n", "")
         split: list[str] = description.replace("\n", "").split(" ")
 
-        title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
+        title = node.xpath(self._ADVERTISEMENT_URL)[0]
+
         apartment.address = title.attrib["title"]
         apartment.postal_code = str.join("", split[0:2])
         apartment.city = str.strip(str.join(" ", split[2::]).capitalize())
