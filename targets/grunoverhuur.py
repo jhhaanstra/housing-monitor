@@ -42,7 +42,7 @@ class SearchExtractor:
     _ADVERTISEMENT_URL = "./a"
     _ADVERTISEMENT_PRICE = "./a//span[@class='obj_price']/text()"
     _ADVERTISEMENT_SIZE = "./a//span[@title='Woonoppervlakte']/text()"
-    _ADVERTISEMENT_ADDRESS = "./a//h3/text()"
+    _ADVERTISEMENT_ADDRESS = "./a//span[contains(@class, 'address')]/text()"
     _BASE_URL = "https://www.grunoverhuur.nl"
 
     capture: Capture
@@ -80,7 +80,7 @@ class SearchExtractor:
         apartment.address = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
         apartment.city = "Groningen (probably)"
         size_text = node.xpath(self._ADVERTISEMENT_SIZE)[0].strip()
-        apartment.size = int(size_text.split(" ")[0])
+        apartment.size = round(float(size_text.split(" ")[0].replace(",", ".")))
 
         return apartment
 

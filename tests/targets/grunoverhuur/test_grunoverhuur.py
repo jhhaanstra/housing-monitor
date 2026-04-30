@@ -15,15 +15,15 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
         advertisements: list[Advertisement] = extractor.get_advertisements()
 
         self.assertEqual(len(advertisements), 10)
-        actual = advertisements[0]
-        self.assertEqual(actual.url, "https://www.grunoverhuur.nl/woningaanbod/huur/groningen/oosterweg/30-b")
-        self.assertEqual(actual.price, "€ 785,- /mnd")
+        actual = advertisements[1]
+        self.assertEqual(actual.url, "https://www.grunoverhuur.nl/woningaanbod/huur/groningen/friesestraatweg/191")
+        self.assertEqual(actual.price, "€ 878,85 /mnd")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEqual(actual_apartment.address, "Oosterweg 30B, 9724CJ Groningen")
+        self.assertEqual(actual_apartment.address, "Friesestraatweg 191, 9743AC Groningen")
         self.assertEqual(actual_apartment.city, "Groningen (probably)")
-        self.assertEqual(actual_apartment.size, 29)
+        self.assertEqual(actual_apartment.size, 48)
 
     def test_should_get_states(self):
         capture = read_capture()
