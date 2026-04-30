@@ -1,5 +1,4 @@
 import unittest
-import pytest
 
 from importlib import resources
 
@@ -15,36 +14,36 @@ class KpMakelaarsSearchTest(unittest.TestCase):
         extractor = SearchExtractor(capture)
         advertisements: list[Advertisement] = extractor.get_advertisements()
 
-        self.assertEquals(len(advertisements), 5)
+        self.assertEqual(len(advertisements), 5)
         actual = advertisements[0]
-        self.assertEquals(actual.url, "https://www.kpmakelaars.nl/woning/Groningen-Aweg-H00250255")
-        self.assertEquals(actual.price, "€895,- \/mnd (incl)")
-        self.assertEquals(actual.state, AdvertisementState.UNAVAILABLE)
+        self.assertEqual(actual.url, "https://www.kpmakelaars.nl/woning/Groningen-Aweg-H00250255")
+        self.assertEqual(actual.price, "€895,- \/mnd (incl)")
+        self.assertEqual(actual.state, AdvertisementState.UNAVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEquals(actual_apartment.address, "Aweg 5-307")
-        self.assertEquals(actual_apartment.postal_code, "9718CS")
-        self.assertEquals(actual_apartment.city, "Groningen")
-        self.assertEquals(actual_apartment.size, 26)
+        self.assertEqual(actual_apartment.address, "Aweg 5-307")
+        self.assertEqual(actual_apartment.postal_code, "9718CS")
+        self.assertEqual(actual_apartment.city, "Groningen")
+        self.assertEqual(actual_apartment.size, 26)
 
     def test_should_get_states(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
         advertisements: list[Advertisement] = extractor.get_advertisements()
-        self.assertEquals(advertisements[0].state, AdvertisementState.UNAVAILABLE)
-        self.assertEquals(advertisements[1].state, AdvertisementState.AVAILABLE)
-        self.assertEquals(advertisements[2].state, AdvertisementState.AVAILABLE)
-        self.assertEquals(advertisements[3].state, AdvertisementState.AVAILABLE)
-        self.assertEquals(advertisements[4].state, AdvertisementState.AVAILABLE)
+        self.assertEqual(advertisements[0].state, AdvertisementState.UNAVAILABLE)
+        self.assertEqual(advertisements[1].state, AdvertisementState.AVAILABLE)
+        self.assertEqual(advertisements[2].state, AdvertisementState.AVAILABLE)
+        self.assertEqual(advertisements[3].state, AdvertisementState.AVAILABLE)
+        self.assertEqual(advertisements[4].state, AdvertisementState.AVAILABLE)
 
     def test_use_config_in_url(self):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_query(config)
-        self.assertEquals("min_price=800&max_price=1200&min_area=30", url)
+        self.assertEqual("min_price=800&max_price=1200&min_area=30", url)
 
 
-    @pytest.mark.skip("Live test")
+    @unittest.skip("Live test")
     def test_pararius_live(self):
         config = TargetConfig(500, 1000, 30)
         kpmakelaars = KpMakelaars(config, requestor=HttpRequestor())

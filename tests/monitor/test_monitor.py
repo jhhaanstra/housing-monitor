@@ -82,32 +82,32 @@ class TargetBuilderTest(unittest.TestCase):
     def test_should_build_pandomo(self):
         target: Target = TargetBuilder.build_target('pandomo', self.config)
         self.assertIsInstance(target, Pandomo)
-        self.assertEquals(target.name, 'pandomo')
-        self.assertEquals(target.config, self.config)
+        self.assertEqual(target.name, 'pandomo')
+        self.assertEqual(target.config, self.config)
 
     def test_should_build_dc_wonen(self):
         target: Target = TargetBuilder.build_target('dcwonen', self.config)
         self.assertIsInstance(target, DcWonen)
-        self.assertEquals(target.name, 'dcwonen')
-        self.assertEquals(target.config, self.config)
+        self.assertEqual(target.name, 'dcwonen')
+        self.assertEqual(target.config, self.config)
 
     def test_should_build_kp_makelaars(self):
         target: Target = TargetBuilder.build_target('kpmakelaars', self.config)
         self.assertIsInstance(target, KpMakelaars)
-        self.assertEquals(target.name, 'kpmakelaars')
-        self.assertEquals(target.config, self.config)
+        self.assertEqual(target.name, 'kpmakelaars')
+        self.assertEqual(target.config, self.config)
 
     def test_should_build_pararius(self):
         target: Target = TargetBuilder.build_target('pararius', self.config)
         self.assertIsInstance(target, Pararius)
-        self.assertEquals(target.name, 'pararius')
-        self.assertEquals(target.config, self.config)
+        self.assertEqual(target.name, 'pararius')
+        self.assertEqual(target.config, self.config)
 
     def test_should_build_gruno_verhuur(self):
         target: Target = TargetBuilder.build_target('grunoverhuur', self.config)
         self.assertIsInstance(target, GrunoVerhuur)
-        self.assertEquals(target.name, 'grunoverhuur')
-        self.assertEquals(target.config, self.config)
+        self.assertEqual(target.name, 'grunoverhuur')
+        self.assertEqual(target.config, self.config)
 
     def test_should_throw_value_error_on_invalid_name(self):
         try:
