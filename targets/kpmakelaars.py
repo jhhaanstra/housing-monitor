@@ -28,26 +28,15 @@ class Requestor(ABC):
 class HttpRequestor(Requestor):
 
     def request_search_page(self, config: TargetConfig) -> Capture:
-        search = self.build_search_query(config)
-
-        response = requests.post('https://cdn.eazlee.com/eazlee/api/query_functions.php', data={
-            "action": "all_locations",
-            "search": search,
-            "lang": "woningaanbod",
-            "api": "8d26f881f5008508afd604a108ea5d06",
-            "path":	"/woningaanbod",
-            "center_map": "false"
-        })
-
+        response = requests.get(self.build_search_query(config))
         return Capture(response.content.decode("utf-8"))
 
     def build_search_query(self, config: TargetConfig):
-        return "min_price={min_price}&max_price={max_price}&min_area={size}".format(
+        return 'https://www.kpmakelaars.nl/woningaanbod?offer=rent&minprice={min_price}&location=Groningen&maxprice={max_price}&surface={size}'.format(
             min_price=config.min_price,
             max_price=config.max_price,
             size=config.min_surface
         )
-
 
 class SearchExtractor:
     def __init__(self, capture: Capture) -> None:

@@ -44,7 +44,7 @@ class KpMakelaarsSearchTest(unittest.TestCase):
 
 
     @unittest.skip("Live test")
-    def test_pararius_live(self):
+    def test_kpmakelaars_live(self):
         config = TargetConfig(500, 1000, 30)
         kpmakelaars = KpMakelaars(config, requestor=HttpRequestor())
         advertisements: list[Advertisement] = kpmakelaars.get_advertisements()
