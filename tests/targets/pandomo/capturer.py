@@ -9,4 +9,4 @@ requestor = HttpRequestor()
 
 capture_name = "pandomo_search_page_{}.html".format(math.floor(time.time()))
 with open(capture_name, "w") as capture:
-    capture.write(requestor.request_search_page().raw)
+    capture.write(requestor.request_search_page(config).raw)

@@ -3,12 +3,17 @@ import unittest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.kpmakelaars import SearchExtractor, Requestor, Capture, KpMakelaars, HttpRequestor
+from targets.kpmakelaars import (
+    SearchExtractor,
+    Requestor,
+    Capture,
+    KpMakelaars,
+    HttpRequestor,
+)
 from targets.target import TargetConfig
 
 
 class KpMakelaarsSearchTest(unittest.TestCase):
-
     def test_should_get_available_advertisement(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
@@ -16,7 +21,9 @@ class KpMakelaarsSearchTest(unittest.TestCase):
 
         self.assertEqual(len(advertisements), 5)
         actual = advertisements[0]
-        self.assertEqual(actual.url, "https://www.kpmakelaars.nl/woning/Groningen-Aweg-H00250255")
+        self.assertEqual(
+            actual.url, "https://www.kpmakelaars.nl/woning/Groningen-Aweg-H00250255"
+        )
         self.assertEqual(actual.price, "€895,- \/mnd (incl)")
         self.assertEqual(actual.state, AdvertisementState.UNAVAILABLE)
 
@@ -42,7 +49,6 @@ class KpMakelaarsSearchTest(unittest.TestCase):
         url = requestor.build_search_query(config)
         self.assertEqual("min_price=800&max_price=1200&min_area=30", url)
 
-
     @unittest.skip("Live test")
     def test_pararius_live(self):
         config = TargetConfig(500, 1000, 30)
@@ -67,9 +73,11 @@ class TestRequestor(Requestor):
 
 
 def read_capture() -> Capture:
-    with resources.open_text("tests.targets.kpmakelaars", "kpmakelaars_search_page.json") as t:
+    with resources.open_text(
+        "tests.targets.kpmakelaars", "kpmakelaars_search_page.json"
+    ) as t:
         return Capture(t.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -18,14 +18,12 @@ class Capture:
 
 
 class Requestor(ABC):
-
     @abstractmethod
     def request_search_page(self, config: TargetConfig) -> Capture:
         pass
 
 
 class HttpRequestor(Requestor):
-
     def request_search_page(self, config: TargetConfig) -> Capture:
         url = self.build_search_url(config)
         response = requests.get(url)
@@ -34,18 +32,21 @@ class HttpRequestor(Requestor):
     """
     Skip surface area because that seems broken.
     """
+
     def build_search_url(self, config: TargetConfig) -> str:
         return "https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC{min_price}&max-price=%E2%82%AC{max_price}&min-area=0+m%C2%B2&max-area=500+m%C2%B2".format(
             min_price=self._format_number(config.min_price),
-            max_price=self._format_number(config.max_price)
+            max_price=self._format_number(config.max_price),
         )
 
     def _format_number(self, nr: int) -> str:
-        return f'{nr:,}'
+        return f"{nr:,}"
 
 
 class SearchExtractor:
-    _ADVERTISEMENT_BASE = "//div[contains(@class, 'property-listing')]/div[@class='row']/div"
+    _ADVERTISEMENT_BASE = (
+        "//div[contains(@class, 'property-listing')]/div[@class='row']/div"
+    )
     _ADVERTISEMENT_TITLE_URL = ".//h2/a"
     _ADVERTISEMENT_ADDRESS = ".//address"
     _ADVERTISEMENT_PRICE = "./div/div[2]//span[@class='item-price']"
@@ -103,14 +104,13 @@ class SearchExtractor:
 
 
 class DcWonen(Target):
-
     requestor: Requestor
     extractor: SearchExtractor
 
     def __init__(self, config: TargetConfig, **kwargs):
-        super().__init__(config, 'dcwonen')
-        if 'requestor' in kwargs:
-            self.requestor = kwargs['requestor']
+        super().__init__(config, "dcwonen")
+        if "requestor" in kwargs:
+            self.requestor = kwargs["requestor"]
         else:
             self.requestor = HttpRequestor()
 

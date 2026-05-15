@@ -18,14 +18,12 @@ class Capture:
 
 
 class Requestor(ABC):
-
     @abstractmethod
     def request_search_page(self, config: TargetConfig) -> Capture:
         pass
 
 
 class HttpRequestor(Requestor):
-
     def request_search_page(self, config: TargetConfig) -> Capture:
         url = self.build_search_url(config)
         response = requests.get(url)
@@ -35,7 +33,7 @@ class HttpRequestor(Requestor):
         return "https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter%5B39%5D={min_price}%2C{max_price}&filter[43]=19%2C{size}".format(
             min_price=config.min_price,
             max_price=config.max_price,
-            size=config.min_surface
+            size=config.min_surface,
         )
 
 
@@ -66,7 +64,9 @@ class SearchExtractor:
 
     def _advertisement_from_node(self, node: html.HtmlElement) -> Advertisement:
         advertisement = Advertisement()
-        advertisement.url = self.BASE_URL + node.xpath(self._ADVERTISEMENT_URL)[0].attrib["href"]
+        advertisement.url = (
+            self.BASE_URL + node.xpath(self._ADVERTISEMENT_URL)[0].attrib["href"]
+        )
         advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
         advertisement.state = self._state_from_node(node)
 
@@ -85,7 +85,9 @@ class SearchExtractor:
 
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
-        description: str = node.xpath(self._ADVERTISEMENT_DESCRIPTION)[0].text.replace("\n", "")
+        description: str = node.xpath(self._ADVERTISEMENT_DESCRIPTION)[0].text.replace(
+            "\n", ""
+        )
         split: list[str] = description.replace("\n", "").split(" ")
 
         title = node.xpath(self._ADVERTISEMENT_URL)[0]
@@ -93,20 +95,21 @@ class SearchExtractor:
         apartment.address = title.attrib["title"]
         apartment.postal_code = str.join("", split[0:2])
         apartment.city = str.strip(str.join(" ", split[2::]).capitalize())
-        apartment.size = int(node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0])
+        apartment.size = int(
+            node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0]
+        )
 
         return apartment
 
 
 class Pandomo(Target):
-
     requestor: Requestor
     extractor: SearchExtractor
 
     def __init__(self, config: TargetConfig, **kwargs):
-        super().__init__(config, 'pandomo')
-        if 'requestor' in kwargs:
-            self.requestor = kwargs['requestor']
+        super().__init__(config, "pandomo")
+        if "requestor" in kwargs:
+            self.requestor = kwargs["requestor"]
         else:
             self.requestor = HttpRequestor()
 

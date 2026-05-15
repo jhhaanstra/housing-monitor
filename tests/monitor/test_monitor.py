@@ -12,7 +12,6 @@ from targets.target import Target, TargetConfig
 
 
 class MonitorTest(unittest.TestCase):
-
     def test_should_get_advertisements(self):
         apartment = Apartment()
         apartment.size = 100
@@ -75,43 +74,43 @@ class MonitorTest(unittest.TestCase):
         run2 = monitor.run()
         self.assertListEqual(run2, [])
 
-class TargetBuilderTest(unittest.TestCase):
 
+class TargetBuilderTest(unittest.TestCase):
     config: TargetConfig = TargetConfig(800, 1200, 40)
 
     def test_should_build_pandomo(self):
-        target: Target = TargetBuilder.build_target('pandomo', self.config)
+        target: Target = TargetBuilder.build_target("pandomo", self.config)
         self.assertIsInstance(target, Pandomo)
-        self.assertEqual(target.name, 'pandomo')
+        self.assertEqual(target.name, "pandomo")
         self.assertEqual(target.config, self.config)
 
     def test_should_build_dc_wonen(self):
-        target: Target = TargetBuilder.build_target('dcwonen', self.config)
+        target: Target = TargetBuilder.build_target("dcwonen", self.config)
         self.assertIsInstance(target, DcWonen)
-        self.assertEqual(target.name, 'dcwonen')
+        self.assertEqual(target.name, "dcwonen")
         self.assertEqual(target.config, self.config)
 
     def test_should_build_kp_makelaars(self):
-        target: Target = TargetBuilder.build_target('kpmakelaars', self.config)
+        target: Target = TargetBuilder.build_target("kpmakelaars", self.config)
         self.assertIsInstance(target, KpMakelaars)
-        self.assertEqual(target.name, 'kpmakelaars')
+        self.assertEqual(target.name, "kpmakelaars")
         self.assertEqual(target.config, self.config)
 
     def test_should_build_pararius(self):
-        target: Target = TargetBuilder.build_target('pararius', self.config)
+        target: Target = TargetBuilder.build_target("pararius", self.config)
         self.assertIsInstance(target, Pararius)
-        self.assertEqual(target.name, 'pararius')
+        self.assertEqual(target.name, "pararius")
         self.assertEqual(target.config, self.config)
 
     def test_should_build_gruno_verhuur(self):
-        target: Target = TargetBuilder.build_target('grunoverhuur', self.config)
+        target: Target = TargetBuilder.build_target("grunoverhuur", self.config)
         self.assertIsInstance(target, GrunoVerhuur)
-        self.assertEqual(target.name, 'grunoverhuur')
+        self.assertEqual(target.name, "grunoverhuur")
         self.assertEqual(target.config, self.config)
 
     def test_should_throw_value_error_on_invalid_name(self):
         try:
-            TargetBuilder.build_target('invalid', self.config)
+            TargetBuilder.build_target("invalid", self.config)
             self.fail("Should've thrown a ValueError")
         except ValueError:
             pass
@@ -121,7 +120,7 @@ class StaticTarget(Target):
     advertisements: list[Advertisement]
 
     def __init__(self, advertisements: list[Advertisement]) -> None:
-        super().__init__(TargetConfig(0, 0, 0), 'static')
+        super().__init__(TargetConfig(0, 0, 0), "static")
         self.advertisements = advertisements
 
     def get_advertisements(self) -> list[Advertisement]:

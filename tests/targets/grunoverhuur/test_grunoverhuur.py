@@ -3,12 +3,17 @@ import unittest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.grunoverhuur import SearchExtractor, Requestor, Capture, GrunoVerhuur, HttpRequestor
+from targets.grunoverhuur import (
+    SearchExtractor,
+    Requestor,
+    Capture,
+    GrunoVerhuur,
+    HttpRequestor,
+)
 from targets.target import TargetConfig
 
 
 class GrunoVerhuurSearchTest(unittest.TestCase):
-
     def test_should_get_available_advertisement(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
@@ -16,12 +21,17 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
 
         self.assertEqual(len(advertisements), 10)
         actual = advertisements[1]
-        self.assertEqual(actual.url, "https://www.grunoverhuur.nl/woningaanbod/huur/groningen/friesestraatweg/191")
+        self.assertEqual(
+            actual.url,
+            "https://www.grunoverhuur.nl/woningaanbod/huur/groningen/friesestraatweg/191",
+        )
         self.assertEqual(actual.price, "€ 878,85 /mnd")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEqual(actual_apartment.address, "Friesestraatweg 191, 9743AC Groningen")
+        self.assertEqual(
+            actual_apartment.address, "Friesestraatweg 191, 9743AC Groningen"
+        )
         self.assertEqual(actual_apartment.city, "Groningen (probably)")
         self.assertEqual(actual_apartment.size, 48)
 
@@ -53,7 +63,10 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
-        self.assertEqual("https://www.grunoverhuur.nl/woningaanbod/huur?moveunavailablelistingstothebottom=true&pricerange.maxprice=1200&pricerange.minprice=800", url)
+        self.assertEqual(
+            "https://www.grunoverhuur.nl/woningaanbod/huur?moveunavailablelistingstothebottom=true&pricerange.maxprice=1200&pricerange.minprice=800",
+            url,
+        )
 
 
 class TestRequestor(Requestor):
@@ -62,9 +75,11 @@ class TestRequestor(Requestor):
 
 
 def read_capture() -> Capture:
-    with resources.open_text("tests.targets.grunoverhuur", "gruno_verhuur_search_page.html") as t:
+    with resources.open_text(
+        "tests.targets.grunoverhuur", "gruno_verhuur_search_page.html"
+    ) as t:
         return Capture(t.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

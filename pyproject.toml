@@ -15,10 +15,16 @@ dependencies = [
     "notify-py>=0.3.43",
     "packaging>=24.2",
     "pluggy>=1.5.0",
-    "pytest>=8.3.4",
     "requests>=2.32.3",
     "urllib3>=2.3.0",
 ]
 
 [project.scripts]
 monitor = "monitor"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "ruff>=0.15.13",
+    "ty>=0.0.36",
+]

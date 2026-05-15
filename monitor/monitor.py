@@ -12,22 +12,23 @@ from targets.target import Target, TargetConfig
 
 
 class TargetBuilder:
-
     @staticmethod
     def build_target(target: str, target_config: TargetConfig) -> Target:
         match target.lower():
-            case 'pandomo':
+            case "pandomo":
                 return Pandomo(target_config)
-            case 'dcwonen':
+            case "dcwonen":
                 return DcWonen(target_config)
-            case 'kpmakelaars':
+            case "kpmakelaars":
                 return KpMakelaars(target_config)
-            case 'pararius':
+            case "pararius":
                 return Pararius(target_config)
-            case 'grunoverhuur':
+            case "grunoverhuur":
                 return GrunoVerhuur(target_config)
             case _:
-                raise ValueError(target + " is not a valid target, please update the config")
+                raise ValueError(
+                    target + " is not a valid target, please update the config"
+                )
 
 
 class Monitor:
@@ -38,7 +39,9 @@ class Monitor:
     def __init__(self, interval, targets, target_config) -> None:
         super().__init__()
         self.interval = interval
-        self.targets = [TargetBuilder.build_target(target, target_config) for target in targets]
+        self.targets = [
+            TargetBuilder.build_target(target, target_config) for target in targets
+        ]
         self.stored = []
 
     def start(self) -> None:
@@ -47,7 +50,7 @@ class Monitor:
         while running:
             results: list[Advertisement] = self.run()
             for advertisement in results:
-                print('found advertisement')
+                print("found advertisement")
                 self._send_notification(advertisement)
                 with open("advertisements.txt", "a") as f:
                     f.write(advertisement.url)
@@ -60,8 +63,7 @@ class Monitor:
         )
 
         description = "Price: {price} - Size: {size}".format(
-            price=advertisement.price,
-            size=advertisement.apartment.size
+            price=advertisement.price, size=advertisement.apartment.size
         )
 
         print(title + " -- " + description)

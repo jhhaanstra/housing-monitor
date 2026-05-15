@@ -7,7 +7,6 @@ from targets.target import TargetConfig
 
 
 class PandomoSearchTest(unittest.TestCase):
-
     def test_should_get_available_advertisement(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
@@ -15,7 +14,9 @@ class PandomoSearchTest(unittest.TestCase):
 
         self.assertEqual(len(advertisements), 12)
         actual = advertisements[0]
-        self.assertEqual(actual.url, "https://www.pandomo.nl/huurwoningen/h/hoogeweg-1-404680/")
+        self.assertEqual(
+            actual.url, "https://www.pandomo.nl/huurwoningen/h/hoogeweg-1-404680/"
+        )
         self.assertEqual(actual.price, "€ 950,00 p.m")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
@@ -37,7 +38,10 @@ class PandomoSearchTest(unittest.TestCase):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
-        self.assertEqual("https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter%5B39%5D=800%2C1200&filter[43]=19%2C30", url)
+        self.assertEqual(
+            "https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter%5B39%5D=800%2C1200&filter[43]=19%2C30",
+            url,
+        )
 
     @unittest.skip("Live test")
     def test_pandomo_live(self):
@@ -67,5 +71,5 @@ def read_capture() -> Capture:
         return Capture(t.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

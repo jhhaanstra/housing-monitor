@@ -22,14 +22,15 @@ class Apartment:
         if not isinstance(o, Apartment):
             return False
 
-        return self.address == o.address and \
-            self.postal_code == o.postal_code and \
-            self.city == o.city and \
-            self.size == o.size
+        return (
+            self.address == o.address
+            and self.postal_code == o.postal_code
+            and self.city == o.city
+            and self.size == o.size
+        )
 
 
 class Advertisement:
-
     url: str
     apartment: Apartment
     price: str
@@ -43,8 +44,10 @@ class Advertisement:
         if not isinstance(o, Advertisement):
             return False
 
-        return self.url == o.url and \
-            self.apartment == o.apartment and \
-            self.price == o.price and \
-            self.date_fetched == o.date_fetched and \
-            self.state == o.state
+        return (
+            self.url == o.url
+            and self.apartment == o.apartment
+            and self.price == o.price
+            and self.date_fetched == o.date_fetched
+            and self.state == o.state
+        )

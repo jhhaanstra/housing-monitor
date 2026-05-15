@@ -18,14 +18,12 @@ class Capture:
 
 
 class Requestor(ABC):
-
     @abstractmethod
     def request_search_page(self, config: TargetConfig) -> Capture:
         pass
 
 
 class HttpRequestor(Requestor):
-
     def request_search_page(self, config: TargetConfig) -> Capture:
         url = self.build_search_url(config)
         response = requests.get(url)
@@ -35,7 +33,7 @@ class HttpRequestor(Requestor):
         return "https://www.pararius.com/apartments/groningen/{min_price}-{max_price}/{size}m2".format(
             min_price=config.min_price,
             max_price=config.max_price,
-            size=config.min_surface
+            size=config.min_surface,
         )
 
 
@@ -46,7 +44,9 @@ class SearchExtractor:
     _ADVERTISEMENT_DESCRIPTION = "./div/div[contains(@class, 'sub-title')]"
     _ADVERTISEMENT_PRICE = "./div/div[contains(@class, 'price')]"
     _ADVERTISEMENT_LABEL = "./div[contains(@class, 'label')]/span"
-    _ADVERTISEMENT_SPECS = "./div/div[contains(@class, 'features')]/ul/li[contains(@class, 'surface')]"
+    _ADVERTISEMENT_SPECS = (
+        "./div/div[contains(@class, 'features')]/ul/li[contains(@class, 'surface')]"
+    )
 
     capture: Capture
 
@@ -93,27 +93,28 @@ class SearchExtractor:
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
         description: str = node.xpath(self._ADVERTISEMENT_DESCRIPTION)[0].text.strip()
-        split: [str] = description.split(" ")
+        split: list[str] = description.split(" ")
 
         title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
         apartment.address = title.text.strip()
         apartment.postal_code = str.join("", split[0:2])
 
         apartment.city = str.strip(str.join(" ", split[2::]).capitalize())
-        apartment.size = int(node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0])
+        apartment.size = int(
+            node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0]
+        )
 
         return apartment
 
 
 class Pararius(Target):
-
     requestor: Requestor
     extractor: SearchExtractor
 
     def __init__(self, config: TargetConfig, **kwargs):
-        super().__init__(config, 'pararius')
-        if 'requestor' in kwargs:
-            self.requestor = kwargs['requestor']
+        super().__init__(config, "pararius")
+        if "requestor" in kwargs:
+            self.requestor = kwargs["requestor"]
         else:
             self.requestor = HttpRequestor()
 

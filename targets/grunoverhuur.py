@@ -18,14 +18,12 @@ class Capture:
 
 
 class Requestor(ABC):
-
     @abstractmethod
     def request_search_page(self, config: TargetConfig) -> Capture:
         pass
 
 
 class HttpRequestor(Requestor):
-
     def request_search_page(self, config: TargetConfig) -> Capture:
         url = self.build_search_url(config)
         response = requests.get(url)
@@ -33,9 +31,9 @@ class HttpRequestor(Requestor):
 
     def build_search_url(self, config):
         return "https://www.grunoverhuur.nl/woningaanbod/huur?moveunavailablelistingstothebottom=true&pricerange.maxprice={max_price}&pricerange.minprice={min_price}".format(
-            min_price=config.min_price,
-            max_price=config.max_price
+            min_price=config.min_price, max_price=config.max_price
         )
+
 
 class SearchExtractor:
     _ADVERTISEMENT_BASE = "//article//div[@class='datacontainer']"
@@ -73,11 +71,12 @@ class SearchExtractor:
         url = url.split("?")[0]
         return self._BASE_URL + url
 
-
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
 
-        apartment.address = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
+        apartment.address = (
+            node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
+        )
         apartment.city = "Groningen (probably)"
         size_text = node.xpath(self._ADVERTISEMENT_SIZE)[0].strip()
         apartment.size = round(float(size_text.split(" ")[0].replace(",", ".")))
@@ -86,14 +85,13 @@ class SearchExtractor:
 
 
 class GrunoVerhuur(Target):
-
     requestor: Requestor
     extractor: SearchExtractor
 
     def __init__(self, config: TargetConfig, **kwargs):
-        super().__init__(config, 'grunoverhuur')
-        if 'requestor' in kwargs:
-            self.requestor = kwargs['requestor']
+        super().__init__(config, "grunoverhuur")
+        if "requestor" in kwargs:
+            self.requestor = kwargs["requestor"]
         else:
             self.requestor = HttpRequestor()
 

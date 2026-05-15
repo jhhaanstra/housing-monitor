@@ -3,20 +3,28 @@ import unittest
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
-from targets.pararius import SearchExtractor, Requestor, Capture, Pararius, HttpRequestor
+from targets.pararius import (
+    SearchExtractor,
+    Requestor,
+    Capture,
+    Pararius,
+    HttpRequestor,
+)
 from targets.target import TargetConfig
 
 
 class ParariusSearchTest(unittest.TestCase):
-
     def test_should_get_available_advertisement(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
         advertisements: list[Advertisement] = extractor.get_advertisements()
-    
+
         self.assertEqual(len(advertisements), 13)
         actual = advertisements[0]
-        self.assertEqual(actual.url, "https://www.pararius.com/apartment-for-rent/groningen/cfbcf80e/nieuweweg")
+        self.assertEqual(
+            actual.url,
+            "https://www.pararius.com/apartment-for-rent/groningen/cfbcf80e/nieuweweg",
+        )
         self.assertEqual(actual.price, "€1,075 per month")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
@@ -37,8 +45,9 @@ class ParariusSearchTest(unittest.TestCase):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
-        self.assertEqual("https://www.pararius.com/apartments/groningen/800-1200/30m2", url)
-
+        self.assertEqual(
+            "https://www.pararius.com/apartments/groningen/800-1200/30m2", url
+        )
 
     @unittest.skip("Live test")
     def test_pararius_live(self):
@@ -64,9 +73,11 @@ class TestRequestor(Requestor):
 
 
 def read_capture() -> Capture:
-    with resources.open_text("tests.targets.pararius", "pararius_search_page.html") as t:
+    with resources.open_text(
+        "tests.targets.pararius", "pararius_search_page.html"
+    ) as t:
         return Capture(t.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

@@ -16,7 +16,6 @@ class TargetConfig:
 
 
 class Target(ABC):
-
     config: TargetConfig
     name: str
 

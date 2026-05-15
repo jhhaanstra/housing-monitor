@@ -8,7 +8,6 @@ from targets.target import TargetConfig
 
 
 class DcWonenSearchTest(unittest.TestCase):
-
     def test_should_get_available_advertisement(self):
         capture = read_capture()
         extractor = SearchExtractor(capture)
@@ -16,12 +15,16 @@ class DcWonenSearchTest(unittest.TestCase):
 
         self.assertEqual(len(advertisements), 5)
         actual = advertisements[0]
-        self.assertEqual(actual.url, "https://dcwonen.nl/appartement-5-slaapkamers-werfstraat/")
+        self.assertEqual(
+            actual.url, "https://dcwonen.nl/appartement-5-slaapkamers-werfstraat/"
+        )
         self.assertEqual(actual.price, "€2,175/1 juli")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEqual(actual_apartment.address, "Appartement (5 slaapkamers) Werfstraat")
+        self.assertEqual(
+            actual_apartment.address, "Appartement (5 slaapkamers) Werfstraat"
+        )
         self.assertEqual(actual_apartment.city, "Werfstraat, Groningen")
 
     def test_should_get_states(self):
@@ -50,7 +53,10 @@ class DcWonenSearchTest(unittest.TestCase):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
-        self.assertEqual("https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC800&max-price=%E2%82%AC1,200&min-area=0+m%C2%B2&max-area=500+m%C2%B2", url)
+        self.assertEqual(
+            "https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC800&max-price=%E2%82%AC1,200&min-area=0+m%C2%B2&max-area=500+m%C2%B2",
+            url,
+        )
 
 
 class TestRequestor(Requestor):
@@ -63,5 +69,5 @@ def read_capture() -> Capture:
         return Capture(t.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
