@@ -1,7 +1,7 @@
 {
   "target_config": {
     "min_price": 500,
-    "max_price": 1000,
+    "max_price": 2000,
     "min_surface": 30
   },
 

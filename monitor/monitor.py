@@ -1,8 +1,8 @@
-from time import sleep
-
 from notifypy import Notify
 
 from model.model import Advertisement
+from time import sleep
+
 from targets.dcwonen import DcWonen
 from targets.grunoverhuur import GrunoVerhuur
 from targets.kpmakelaars import KpMakelaars
@@ -45,8 +45,9 @@ class Monitor:
         running = True
 
         while running:
-            results: [Advertisement] = self.run()
+            results: list[Advertisement] = self.run()
             for advertisement in results:
+                print('found advertisement')
                 self._send_notification(advertisement)
                 with open("advertisements.txt", "a") as f:
                     f.write(advertisement.url)
@@ -70,8 +71,8 @@ class Monitor:
         notification.message = description
         notification.send()
 
-    def run(self) -> [Advertisement]:
-        results: [Advertisement] = list()
+    def run(self) -> list[Advertisement]:
+        results: list[Advertisement] = list()
 
         for target in self.targets:
             for advertisement in target.get_advertisements():
