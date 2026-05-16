@@ -1,10 +1,11 @@
+import re
 from abc import ABC, abstractmethod
 
 import requests
 from lxml import html
 
 from model.model import Advertisement, AdvertisementState, Apartment
-from targets.target import TargetConfig, Target
+from targets.target import Target, TargetConfig
 
 
 class Capture:
@@ -19,38 +20,26 @@ class Capture:
 
 class Requestor(ABC):
     @abstractmethod
-    def request_search_page(self, config: TargetConfig) -> Capture:
+    def request_search_page(self) -> Capture:
         pass
 
 
 class HttpRequestor(Requestor):
-    def request_search_page(self, config: TargetConfig) -> Capture:
-        url = self.build_search_url(config)
+    def request_search_page(self) -> Capture:
+        url = self.build_search_url()
         response = requests.get(url)
         return Capture(response.content.decode("utf-8"))
 
-    """
-    Skip surface area because that seems broken.
-    """
-
-    def build_search_url(self, config: TargetConfig) -> str:
-        return "https://dcwonen.nl/zoeken/?type=&min-price=%E2%82%AC{min_price}&max-price=%E2%82%AC{max_price}&min-area=0+m%C2%B2&max-area=500+m%C2%B2".format(
-            min_price=self._format_number(config.min_price),
-            max_price=self._format_number(config.max_price),
-        )
-
-    def _format_number(self, nr: int) -> str:
-        return f"{nr:,}"
+    def build_search_url(self, page: int = 1) -> str:
+        return f"https://dcwonen.nl/verhuur/page/{page}"
 
 
 class SearchExtractor:
-    _ADVERTISEMENT_BASE = (
-        "//div[contains(@class, 'property-listing')]/div[@class='row']/div"
-    )
-    _ADVERTISEMENT_TITLE_URL = ".//h2/a"
-    _ADVERTISEMENT_ADDRESS = ".//address"
-    _ADVERTISEMENT_PRICE = "./div/div[2]//span[@class='item-price']"
-    _ADVERTISEMENT_LABEL = "./div/div[2]//span[1][contains(@class, 'label')]/a"
+    _ADVERTISEMENT_BASE = "//li[@class='item']"
+    _ADVERTISEMENT_TITLE_URL = "./a"
+    _ADVERTISEMENT_ADDRESS = "./a//span[@class='object-name']"
+    _ADVERTISEMENT_CITY = "./a//span[@class='object-address']"
+    _ADVERTISEMENT_PRICE = "./a//span[@class='object-price']"
 
     capture: Capture
 
@@ -75,32 +64,26 @@ class SearchExtractor:
             title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
             advertisement = Advertisement()
             advertisement.url = title.attrib["href"]
-            advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.strip()
-            advertisement.state = self._state_from_node(node)
+            advertisement.price = self._price_from_node(node)
+            advertisement.state = AdvertisementState.AVAILABLE
             advertisement.apartment = self._apartment_from_node(node)
             return advertisement
 
-    def _state_from_node(self, node: html.HtmlElement) -> AdvertisementState:
-        labels = node.xpath(self._ADVERTISEMENT_LABEL)
-        if not labels:
-            return AdvertisementState.AVAILABLE
-
-        label: str = labels[0].text.lower().strip()
-
-        match label:
-            case "te huur":
-                return AdvertisementState.AVAILABLE
-            case _:
-                return AdvertisementState.UNAVAILABLE
-
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
-
-        title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
-        apartment.address = title.text.strip()
-        apartment.city = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].text.strip()
-
+        apartment.address = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].text.strip()
+        apartment.city = node.xpath(self._ADVERTISEMENT_CITY)[0].text.strip()
         return apartment
+
+    def _price_from_node(self, node: html.HtmlElement) -> str:
+        node_text = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
+        # Extract the first number-like pattern
+        match = re.search(r"([\d.,]+)", node_text)
+        if match:
+            value_str = match.group(1)  # "750,00"
+            return value_str.replace(".", "").replace(",", ".")
+        else:
+            raise ValueError(f"invalid price found {node_text}")
 
 
 class DcWonen(Target):
@@ -115,6 +98,11 @@ class DcWonen(Target):
             self.requestor = HttpRequestor()
 
     def get_advertisements(self) -> list[Advertisement]:
-        capture: Capture = self.requestor.request_search_page(self.config)
+        capture: Capture = self.requestor.request_search_page()
         extractor = SearchExtractor(capture)
-        return extractor.get_advertisements()
+        return [
+            a
+            for a in extractor.get_advertisements()
+            if float(a.price) <= self.config.max_price
+            and float(a.price) >= self.config.min_price
+        ]
