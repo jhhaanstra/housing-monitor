@@ -24,7 +24,6 @@
 
 
 
-    <link rel="next" href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" />
 
 
             <link rel="canonical" href="https://www.grunoverhuur.nl/woningaanbod/huur" >
@@ -302,7 +301,7 @@
 
         <ul id="account-widget" class="nav navbar-nav loggedout account-container">
                 <li>
-                    <a href="/11-5ab1/gebruiker-inloggen-of-inschrijven?ReturnUrl=%2fwoningaanbod%2fhuur%3fmoveunavailablelistingstothebottom%3dtrue%26pricerange.maxprice%3d1200%26pricerange.minprice%3d600" class="nav-link account-create">Registreren</a>
+                    <a href="/11-5ab1/gebruiker-inloggen-of-inschrijven?ReturnUrl=%2fwoningaanbod%2fhuur%3fgroningen%3flocationofinterest%3dGroningen%26minlivablearea%3d40%26moveunavailablelistingstothebottom%3dtrue%26pricerange.maxprice%3d1200%26pricerange.minprice%3d600" class="nav-link account-create">Registreren</a>
                 </li>
                             <li>
                     <a href="#login-popup" class="nav-link  account-login" data-toggle="modal">Inloggen</a>
@@ -388,7 +387,7 @@
         <aside class="result-options">
             <h2 class="object-search-title visible-xs visible-sm d-block d-lg-none">Zoekopdracht verfijnen</h2>
             <span class="sys-property-count" id="TotalPropertyCount">
-                12 objecten gevonden
+                2 objecten gevonden
             </span>
             <a href="#" class="btn btn-success btn-block sidebar-toggle hidden-lg hidden-md"><i class="fa fa-refresh"></i> Zoekopdracht bijwerken</a>
             <a id="sys-advanced-search" class="btn btn-default btn-medium btn-block advanced_search" href="/4-9936/aanbod-zoeken/uitgebreid-zoeken-in-ons-aanbod">
@@ -396,7 +395,7 @@
                 <span class="text">Uitgebreid zoeken</span>
             </a>
             <div id="sys-search-result-filters-container">
-<input id="Query_QueryString" name="Query.QueryString" type="hidden" value="forsaleorrent=1|moveunavailablelistingstothebottom=true|pricerange.maxprice=1200|pricerange.minprice=600|take=10" />
+<input id="Query_QueryString" name="Query.QueryString" type="hidden" value="forsaleorrent=1|minlivablearea=40|moveunavailablelistingstothebottom=true|pricerange.maxprice=1200|pricerange.minprice=600|take=10" />
 <input id="Query_LocationOfInterest" name="Query.LocationOfInterest" type="hidden" value="" />
 <input id="PropertyTypeId" name="PropertyTypeId" type="hidden" value="0" />
 <input id="Query_ForSaleOrRent" name="Query.ForSaleOrRent" type="hidden" value="FOR_RENT" />
@@ -491,7 +490,7 @@
     <input class="form-check-input group-filter" id="group_19" name="Query.TypeGroups" type="checkbox" value="19" />   
     <label for="group_19" class="form-check-label ">
         Appartement
-        <span id="group_19_select_count" class="count-indicator" count="12">[12]</span>
+        <span id="group_19_select_count" class="count-indicator" count="2">[2]</span>
     </label>
 </div>
 
@@ -537,14 +536,14 @@
         <input checked="checked" data-val="true" data-val-number="The field MinRooms must be a number." data-val-required="The MinRooms field is required." id="Query.MinRooms_0" name="Query.MinRooms" type="radio" value="0" />
         <label for="Query.MinRooms_0">
             Geen voorkeur
-            <span id="number_of_rooms_count" class="count-indicator" numberOfRooms="0">[12]</span>
+            <span id="number_of_rooms_count" class="count-indicator" numberOfRooms="0">[2]</span>
         </label>
     </div>
     <div class="editor-radio">
         <input id="Query.MinRooms_1" name="Query.MinRooms" type="radio" value="1" />
         <label for="Query.MinRooms_1">
             1+ kamer(s)
-            <span id="number_of_rooms_count" class="count-indicator" numberOfRooms="1">[12]</span>
+            <span id="number_of_rooms_count" class="count-indicator" numberOfRooms="1">[2]</span>
         </label>
     </div>
     <div class="editor-radio">
@@ -595,7 +594,7 @@
             <input checked="checked" data-val="true" data-val-number="The field MinArea must be a number." id="Query.MinArea_0" name="Query.MinArea" type="radio" value="0" />
             <label for="Query.MinArea_0">
                 Geen voorkeur
-                <span id="buildable_area_count" class="count-indicator" Area="0">[12]</span>
+                <span id="buildable_area_count" class="count-indicator" Area="0">[2]</span>
             </label>
         </div>
 
@@ -612,17 +611,17 @@
                 <div class="aside_container">
                     <h2>Minimum woonoppervlakte</h2>
                         <div class="editor-radio ">
-        <input checked="checked" data-val="true" data-val-number="The field MinLivableArea must be a number." id="Query.MinLivableArea_0" name="Query.MinLivableArea" type="radio" value="0" />        
+        <input data-val="true" data-val-number="The field MinLivableArea must be a number." id="Query.MinLivableArea_0" name="Query.MinLivableArea" type="radio" value="0" />        
         <label for="Query.MinLivableArea_0">
             Geen voorkeur
-            <span id="livable_area_count" class="count-indicator" livableArea="0">[12]</span>
+            <span id="livable_area_count" class="count-indicator" livableArea="0">[20]</span>
         </label>
     </div>
     <div class="editor-radio ">
         <input id="Query.MinLivableArea_25" name="Query.MinLivableArea" type="radio" value="25" />        
         <label for="Query.MinLivableArea_25">
             25 m&#178;
-            <span id="livable_area_count" class="count-indicator" livableArea="25">[2]</span>
+            <span id="livable_area_count" class="count-indicator" livableArea="25">[7]</span>
         </label>
     </div>
     <div class="editor-radio ">
@@ -679,23 +678,23 @@
                             <div class="filter_header">Bouwperiode</div>
                             
 <select id="Query_BuildingPeriod" name="Query.BuildingPeriod.Value" class="filter-building-period sys-buildingperiod-filter input-block-level form-control">
-        <option value=""  selected="selected" label="Geen voorkeur [12]">
-            Geen voorkeur [12]
+        <option value=""  selected="selected" label="Geen voorkeur [2]">
+            Geen voorkeur [2]
         </option>
-        <option value="0-1905"  label="tot 1905 [4]">
-            tot 1905 [4]
+        <option value="0-1905"  label="tot 1905">
+            tot 1905
         </option>
-        <option value="1906-1930"  label="1906 - 1930 [3]">
-            1906 - 1930 [3]
+        <option value="1906-1930"  label="1906 - 1930 [2]">
+            1906 - 1930 [2]
         </option>
         <option value="1931-1944"  label="1931 - 1944">
             1931 - 1944
         </option>
-        <option value="1945-1959"  label="1945 - 1959 [2]">
-            1945 - 1959 [2]
+        <option value="1945-1959"  label="1945 - 1959">
+            1945 - 1959
         </option>
-        <option value="1960-1970"  label="1960 - 1970 [3]">
-            1960 - 1970 [3]
+        <option value="1960-1970"  label="1960 - 1970">
+            1960 - 1970
         </option>
         <option value="1971-1980"  label="1971 - 1980">
             1971 - 1980
@@ -723,11 +722,11 @@
 <select id="Query_IsNewState" name="Query.IsNewState" class="filter-state input-block-level form-control">
         <option value=""  selected="selected">
             Geen voorkeur
-                [12]
+                [2]
         </option>
         <option value="False" >
             Bestaande bouw
-                [12]
+                [2]
         </option>
         <option value="True" >
             Nieuwbouw
@@ -920,7 +919,7 @@
     <input class="near-to-filter" id="LocatedOnQuietStreet" name="Query.LocatedOnQuietStreet" type="checkbox" value="true" /><input name="Query.LocatedOnQuietStreet" type="hidden" value="false" />
     <label for="LocatedOnQuietStreet">
         Aan rustige weg
-        <span id="locatedonquietstreet_count" class="count-indicator" count="1">[1]</span>
+        <span id="locatedonquietstreet_count" class="count-indicator" count="0"></span>
     </label>
 </div>
 
@@ -1067,14 +1066,6 @@
     <div class="row">
         <div class="col-md-12 object_list_paging">
             
-    <ul class="pagination pull-right">
-            <li class="sys_paging disabled"><a>&lt;&lt;</a></li>
-            <li class="sys_paging disabled"><a>&lt;</a></li>
-                        <li class="sys_paging active current-page"><a>1</a></li>
-                <li><a href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" class="sys_paging other-page" pagenumber="2">2</a></li>
-                    <li><a href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" class="sys_paging next-page" pagenumber="2">&gt;</a></li>
-            <li><a href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" class="sys_paging last-page" pagenumber="2">&gt;&gt;</a></li>
-    </ul>
 
         </div>
     </div>
@@ -1087,9 +1078,9 @@
                 <div class="object_image_container">
                     <i class="isfavorite fa fa-heart"></i>
                     <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/verzetsstrijderslaan/15?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Vier kamers beschikbaar in een groepshuis! ">
+                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/tweede-willemstraat/8-c?forsaleorrent=1&amp;minlivablearea=40&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Appartement voor 6 maanden in Herewegbuurt!">
                                 <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Verzetsstrijderslaan 15, 9727CA Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4092254/128022540/$m/voorzijde 1.jpg" />
+                                    <img alt="Property photo - Tweede Willemstraat 8C, 9725JJ Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4099029/128283149/$m/voorkant foto.jpeg" />
                                 </div>
                             </a>
                     </div>
@@ -1098,21 +1089,21 @@
                                     </div>
             </div>
             <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/verzetsstrijderslaan/15?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
+                <a href="/woningaanbod/huur/groningen/tweede-willemstraat/8-c?forsaleorrent=1&amp;minlivablearea=40&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
                     <div class="object_data">
                         <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Vier kamers beschikbaar in een groepshuis! </h3>
-                                                            <span class="obj_sub_address">Verzetsstrijderslaan 15, 9727CA Groningen</span>
+                                <h3 class="obj_address title">Te huur: Appartement voor 6 maanden in Herewegbuurt!</h3>
+                                                            <span class="obj_sub_address">Tweede Willemstraat 8C, 9725JJ Groningen</span>
                         </div>
        
 
                                 <span class="obj_type_price">
-                                    <span class="obj_price">€ 690,- /mnd</span>
+                                    <span class="obj_price">€ 1.157,07 /mnd</span>
                                 </span>
                                
                         <ul>
                             <li>
-appartement, Studentenkamer, wonen overig                            </li>
+appartement, bovenwoning, appartement                            </li>
 
 
                         </ul>
@@ -1120,18 +1111,22 @@ appartement, Studentenkamer, wonen overig                            </li>
                         <div class="object_data_labels">
                                 <span class="object_label object_rooms" title="Aantal kamers">
                                     <i class="fa fa-clone"></i>
-                                    <span>1</span>
+                                    <span>2</span>
                                 </span>
 
                                 <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
                                     <i class="fa fa-bed"></i>
                                     <span>1</span>
                                 </span>
-                            
+                                                            <span class="object_label object_bath_rooms" title="Aantal badkamers">
+                                    <i class="fa fa-bath"></i>
+                                    <span>1</span>
+                                </span>
+
                                 <span class="object_label object_sqfeet">
                                     <i class="fa fa-arrows-alt"></i>
                                     <span>
-                                        <span title="Woonoppervlakte">15 m&#178;</span>
+                                        <span title="Woonoppervlakte">44 m&#178;</span>
                                     </span>
                                 </span>
 
@@ -1140,7 +1135,7 @@ appartement, Studentenkamer, wonen overig                            </li>
                                 <span class="object_label object_publicid" title="Referentienummer">
                                     <i>ID</i>
                                     <span>
-                                        01398
+                                        01405
                                     </span>
                                 </span>
 
@@ -1169,14 +1164,14 @@ appartement, Studentenkamer, wonen overig                            </li>
                 <div class="object_options">
                     <div class="options">
                             <div class="photos">
-                                <i class="fa fa-picture-o"></i>20
+                                <i class="fa fa-picture-o"></i>17
                             </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4092254" data-property-id="4092254" data-property-address="Te huur: Vier kamers beschikbaar in een groepshuis! " href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
+                                                                            <a class="make-favorite object-favorite " id="object-favorite-4099029" data-property-id="4099029" data-property-address="Te huur: Appartement voor 6 maanden in Herewegbuurt!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
                                 <span class="favorite fav-icon">
                                     <i class="fa fa-heart"></i>
                                 </span>
                             </a>
-                                                    <a class="object-follow " id="object-follow-4092254" data-property-id="4092254" data-property-address="Te huur: Vier kamers beschikbaar in een groepshuis! " href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
+                                                    <a class="object-follow " id="object-follow-4099029" data-property-id="4099029" data-property-address="Te huur: Appartement voor 6 maanden in Herewegbuurt!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
                                 <span class="follow fol-icon">
                                     <i class="fa fa-bell"></i>
                                 </span>
@@ -1187,23 +1182,22 @@ appartement, Studentenkamer, wonen overig                            </li>
         </div>
     </article>
     <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail new_forrent ">
+        <div class="object thumbnail  ">
             <div class="imagecontainer">
                 <div class="object_image_container">
                     <i class="isfavorite fa fa-heart"></i>
                     <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/friesestraatweg/191?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Tijdelijk appartement aan de Friesestraatweg">
+                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/friesestraatweg/191?forsaleorrent=1&amp;minlivablearea=40&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Tijdelijk appartement aan de Friesestraatweg">
                                 <div class="sys-oneimg-nocycle">
                                     <img alt="Property photo - Friesestraatweg 191, 9743AC Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4081485/127605584/$m/img_0618.jpg" />
                                 </div>
                             </a>
                     </div>
-                            <span class="object_status new_forrent"><span>Nieuw in verhuur</span></span>
 
                                     </div>
             </div>
             <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/friesestraatweg/191?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
+                <a href="/woningaanbod/huur/groningen/friesestraatweg/191?forsaleorrent=1&amp;minlivablearea=40&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
                     <div class="object_data">
                         <div class="obj_address_container">
                                 <h3 class="obj_address title">Te huur: Tijdelijk appartement aan de Friesestraatweg</h3>
@@ -1282,823 +1276,6 @@ appartement, benedenwoning, appartement                            </li>
         </div>
     </article>
                         </div><div class="row">
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail  ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/herestraat/111-a?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Leuk groepshuis met 4 kamers midden in het Centrum!">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Herestraat 111A, 9711LG Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4055838/126623836/$m/whatsapp image 2026-04-03 at 16.46.47.jpeg" />
-                                </div>
-                            </a>
-                    </div>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/herestraat/111-a?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Leuk groepshuis met 4 kamers midden in het Centrum!</h3>
-                                                            <span class="obj_sub_address">Herestraat 111A, 9711LG Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 905,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">18 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01355
-                                    </span>
-                                </span>
-
-
-
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>20
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4055838" data-property-id="4055838" data-property-address="Te huur: Leuk groepshuis met 4 kamers midden in het Centrum!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4055838" data-property-id="4055838" data-property-address="Te huur: Leuk groepshuis met 4 kamers midden in het Centrum!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail new_forrent ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/briljantstraat/235?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Studentenkamer in Vinkhuizen ideaal voor RUG &amp; Hanze studenten">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Briljantstraat 235, 9743NJ Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4070371/127179522/$m/20260305_083329800_ios.jpg" />
-                                </div>
-                            </a>
-                    </div>
-                            <span class="object_status new_forrent"><span>Nieuw in verhuur</span></span>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/briljantstraat/235?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Studentenkamer in Vinkhuizen ideaal voor RUG &amp; Hanze studenten</h3>
-                                                            <span class="obj_sub_address">Briljantstraat 235, 9743NJ Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 625,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">16,02 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01376
-                                    </span>
-                                </span>
-
-
-                                <span class="object_label object_gwe">
-                                    <i>incl.</i>
-                                    <span>
-                                            <span>
-                                                gas
-                                            </span>
-                                                                                    <span>
-                                                water
-                                            </span>
-                                                                                    <span>
-                                                elektriciteit
-                                            </span>
-                                    </span>
-                                </span>
-
-                                <span class="object_label object_fitment" title="Inrichting">
-                                    <i class="fa fa-home"></i>
-                                    <span>
-                                                                                    <span>Gestoffeerd</span>
-                                    </span>
-                                </span>
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>12
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4070371" data-property-id="4070371" data-property-address="Te huur: Studentenkamer in Vinkhuizen ideaal voor RUG &amp; Hanze studenten" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4070371" data-property-id="4070371" data-property-address="Te huur: Studentenkamer in Vinkhuizen ideaal voor RUG &amp; Hanze studenten" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-                        </div><div class="row">
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail new_forrent ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/s-s-rosensteinlaan/15-a?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: studentenkamer in de Gorechtbuurt">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - S.S. Rosensteinlaan 15A, 9713AT Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4070402/127180699/$m/voorkant.jpg" />
-                                </div>
-                            </a>
-                    </div>
-                            <span class="object_status new_forrent"><span>Nieuw in verhuur</span></span>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/s-s-rosensteinlaan/15-a?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: studentenkamer in de Gorechtbuurt</h3>
-                                                            <span class="obj_sub_address">S.S. Rosensteinlaan 15A, 9713AT Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 695,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">17 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01377
-                                    </span>
-                                </span>
-
-
-                                <span class="object_label object_gwe">
-                                    <i>incl.</i>
-                                    <span>
-                                            <span>
-                                                gas
-                                            </span>
-                                                                                    <span>
-                                                water
-                                            </span>
-                                                                                    <span>
-                                                elektriciteit
-                                            </span>
-                                    </span>
-                                </span>
-
-                                <span class="object_label object_fitment" title="Inrichting">
-                                    <i class="fa fa-home"></i>
-                                    <span>
-                                                                                    <span>Gestoffeerd</span>
-                                    </span>
-                                </span>
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>7
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4070402" data-property-id="4070402" data-property-address="Te huur: studentenkamer in de Gorechtbuurt" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4070402" data-property-id="4070402" data-property-address="Te huur: studentenkamer in de Gorechtbuurt" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail new_forrent ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/briljantstraat/29?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Ruime kamer aan de Briljantstraat!">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Briljantstraat 29, 9743NA Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4069035/127128905/$m/20251104_151228819_ios.jpg" />
-                                </div>
-                            </a>
-                    </div>
-                            <span class="object_status new_forrent"><span>Nieuw in verhuur</span></span>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/briljantstraat/29?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Ruime kamer aan de Briljantstraat!</h3>
-                                                            <span class="obj_sub_address">Briljantstraat 29, 9743NA Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 690,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">16 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01375
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_fitment" title="Inrichting">
-                                    <i class="fa fa-home"></i>
-                                    <span>
-                                                                                    <span>Gestoffeerd</span>
-                                    </span>
-                                </span>
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>10
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4069035" data-property-id="4069035" data-property-address="Te huur: Ruime kamer aan de Briljantstraat!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4069035" data-property-id="4069035" data-property-address="Te huur: Ruime kamer aan de Briljantstraat!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-                        </div><div class="row">
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail new_forrent ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/siriusstraat/44?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: 4 super nette kamers in volledig gerenoveerd studentenhuis!">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Siriusstraat 44, 9742KX Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4069022/127128409/$m/1.jpg" />
-                                </div>
-                            </a>
-                    </div>
-                            <span class="object_status new_forrent"><span>Nieuw in verhuur</span></span>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/siriusstraat/44?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: 4 super nette kamers in volledig gerenoveerd studentenhuis!</h3>
-                                                            <span class="obj_sub_address">Siriusstraat 44, 9742KX Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 785,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">20 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01374
-                                    </span>
-                                </span>
-
-
-
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>25
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4069022" data-property-id="4069022" data-property-address="Te huur: 4 super nette kamers in volledig gerenoveerd studentenhuis!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4069022" data-property-id="4069022" data-property-address="Te huur: 4 super nette kamers in volledig gerenoveerd studentenhuis!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail new_forrent ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/leeuwarden/tuinen/8-b?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Leuk appartement in het centrum van Leeuwarden">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Tuinen 8B, 8911KD Leeuwarden" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4064990/126973990/$m/b883014a-2e20-4744-a280-8d9fa845afeb.jpg" />
-                                </div>
-                            </a>
-                    </div>
-                            <span class="object_status new_forrent"><span>Nieuw in verhuur</span></span>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/leeuwarden/tuinen/8-b?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Leuk appartement in het centrum van Leeuwarden</h3>
-                                                            <span class="obj_sub_address">Tuinen 8B, 8911KD Leeuwarden</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 1.200,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, bovenwoning, appartement                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>2</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                                                            <span class="object_label object_bath_rooms" title="Aantal badkamers">
-                                    <i class="fa fa-bath"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">43 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01369
-                                    </span>
-                                </span>
-
-
-
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>13
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4064990" data-property-id="4064990" data-property-address="Te huur: Leuk appartement in het centrum van Leeuwarden" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4064990" data-property-id="4064990" data-property-address="Te huur: Leuk appartement in het centrum van Leeuwarden" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-                        </div><div class="row">
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail  ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/nieuwe-boteringestraat/79?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Zes kamers in mooie, lichte woning aan het Noorderplantsoen!
-">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Nieuwe Boteringestraat 79, 9712PK Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4062313/126871392/$m/voorkant.jpg" />
-                                </div>
-                            </a>
-                    </div>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/nieuwe-boteringestraat/79?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Zes kamers in mooie, lichte woning aan het Noorderplantsoen!
-</h3>
-                                                            <span class="obj_sub_address">Nieuwe Boteringestraat 79, 9712PK Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 733,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">19 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01364
-                                    </span>
-                                </span>
-
-
-                                <span class="object_label object_gwe">
-                                    <i>incl.</i>
-                                    <span>
-                                            <span>
-                                                gas
-                                            </span>
-                                                                                    <span>
-                                                water
-                                            </span>
-                                                                                    <span>
-                                                elektriciteit
-                                            </span>
-                                    </span>
-                                </span>
-
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>19
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4062313" data-property-id="4062313" data-property-address="Te huur: Zes kamers in mooie, lichte woning aan het Noorderplantsoen!
-" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4062313" data-property-id="4062313" data-property-address="Te huur: Zes kamers in mooie, lichte woning aan het Noorderplantsoen!
-" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-    <article class="col-xs-12 col-md-6 objectcontainer">
-        <div class="object thumbnail  ">
-            <div class="imagecontainer">
-                <div class="object_image_container">
-                    <i class="isfavorite fa fa-heart"></i>
-                    <div class="sys-image-container img-container">
-                            <a class="sys-property-link" href="/woningaanbod/huur/groningen/westersingel/24?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10" title="Te huur: Leuke kamer met eigen keuken aan de Westersingel!">
-                                <div class="sys-oneimg-nocycle">
-                                    <img alt="Property photo - Westersingel 24, 9718CL Groningen" class="object_image" src="https://haywebattachments.blob.core.windows.net/public/3101/4062213/126867852/$m/voorzijde 3.jpeg" />
-                                </div>
-                            </a>
-                    </div>
-
-                                    </div>
-            </div>
-            <div class="datacontainer">
-                <a href="/woningaanbod/huur/groningen/westersingel/24?forsaleorrent=1&amp;moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;take=10">
-                    <div class="object_data">
-                        <div class="obj_address_container">
-                                <h3 class="obj_address title">Te huur: Leuke kamer met eigen keuken aan de Westersingel!</h3>
-                                                            <span class="obj_sub_address">Westersingel 24, 9718CL Groningen</span>
-                        </div>
-       
-
-                                <span class="obj_type_price">
-                                    <span class="obj_price">€ 650,- /mnd</span>
-                                </span>
-                               
-                        <ul>
-                            <li>
-appartement, Studentenkamer, wonen overig                            </li>
-
-
-                        </ul>
-
-                        <div class="object_data_labels">
-                                <span class="object_label object_rooms" title="Aantal kamers">
-                                    <i class="fa fa-clone"></i>
-                                    <span>1</span>
-                                </span>
-
-                                <span class="object_label object_bed_rooms" title="Minimum aantal slaapkamers">
-                                    <i class="fa fa-bed"></i>
-                                    <span>1</span>
-                                </span>
-                            
-                                <span class="object_label object_sqfeet">
-                                    <i class="fa fa-arrows-alt"></i>
-                                    <span>
-                                        <span title="Woonoppervlakte">18 m&#178;</span>
-                                    </span>
-                                </span>
-
-
-
-                                <span class="object_label object_publicid" title="Referentienummer">
-                                    <i>ID</i>
-                                    <span>
-                                        01357
-                                    </span>
-                                </span>
-
-
-                                <span class="object_label object_gwe">
-                                    <i>incl.</i>
-                                    <span>
-                                            <span>
-                                                gas
-                                            </span>
-                                                                                    <span>
-                                                water
-                                            </span>
-                                                                                    <span>
-                                                elektriciteit
-                                            </span>
-                                    </span>
-                                </span>
-
-                                <span class="object_label object_fitment" title="Inrichting">
-                                    <i class="fa fa-home"></i>
-                                    <span>
-                                                                                    <span>Gestoffeerd</span>
-                                    </span>
-                                </span>
-                        </div>
-
-
-
-                    </div>
-                </a>
-                <div class="object_options">
-                    <div class="options">
-                            <div class="photos">
-                                <i class="fa fa-picture-o"></i>7
-                            </div>
-                                                                            <a class="make-favorite object-favorite " id="object-favorite-4062213" data-property-id="4062213" data-property-address="Te huur: Leuke kamer met eigen keuken aan de Westersingel!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Als favoriet opslaan">
-                                <span class="favorite fav-icon">
-                                    <i class="fa fa-heart"></i>
-                                </span>
-                            </a>
-                                                    <a class="object-follow " id="object-follow-4062213" data-property-id="4062213" data-property-address="Te huur: Leuke kamer met eigen keuken aan de Westersingel!" href="#" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="Object volgen">
-                                <span class="follow fol-icon">
-                                    <i class="fa fa-bell"></i>
-                                </span>
-                            </a>
-                                                </div>
-                </div>
-            </div>
-        </div>
-    </article>
-                        </div><div class="row">
 
             </div>
         </div>
@@ -2106,14 +1283,6 @@ appartement, Studentenkamer, wonen overig                            </li>
     <div class="row">
         <div class="col-md-12 object_list_paging">
             
-    <ul class="pagination pull-right">
-            <li class="sys_paging disabled"><a>&lt;&lt;</a></li>
-            <li class="sys_paging disabled"><a>&lt;</a></li>
-                        <li class="sys_paging active current-page"><a>1</a></li>
-                <li><a href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" class="sys_paging other-page" pagenumber="2">2</a></li>
-                    <li><a href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" class="sys_paging next-page" pagenumber="2">&gt;</a></li>
-            <li><a href="/woningaanbod/huur?moveunavailablelistingstothebottom=true&amp;pricerange.maxprice=1200&amp;pricerange.minprice=600&amp;skip=10" class="sys_paging last-page" pagenumber="2">&gt;&gt;</a></li>
-    </ul>
 
         </div>
     </div>
@@ -2427,7 +1596,7 @@ appartement, Studentenkamer, wonen overig                            </li>
                         </div>
                         <div class="modal-body">
                             <div id="members-login-error" style="display:none;"></div>
-                            <input name="__RequestVerificationToken" type="hidden" value="cSnPVcsPdQc9E8JvRg4jQ0OkdMgsQm9QvZY8OGAYsERMkCjBUeTBt7q-adTdILh4FNZ-OyVW7guxXlojeyDxXsk8KZWw8LoylUswW87xTBg1" />
+                            <input name="__RequestVerificationToken" type="hidden" value="gg_YES2xoE0wCcHl_JgtzgO2Bb5h2uYGnnFla-UXvbJ8eRZCQ9IVUzfM9samqZMpnvHmVp00bcdG-_2lBgYWEP_YSZLE9-YbaAiVIHqdFHk1" />
                             
 
                             <div class="form-group">
@@ -2465,7 +1634,7 @@ appartement, Studentenkamer, wonen overig                            </li>
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-primary btn-block sys-login-button" tabindex="4" id="members-profile-login-button">Inloggen</button>
-                            <a class="btn btn-link btn-block account-create" href="/11-5ab1/gebruiker-inloggen-of-inschrijven?ReturnUrl=%2fwoningaanbod%2fhuur%3fmoveunavailablelistingstothebottom%3dtrue%26pricerange.maxprice%3d1200%26pricerange.minprice%3d600">Nog geen account?</a>
+                            <a class="btn btn-link btn-block account-create" href="/11-5ab1/gebruiker-inloggen-of-inschrijven?ReturnUrl=%2fwoningaanbod%2fhuur%3fgroningen%3flocationofinterest%3dGroningen%26minlivablearea%3d40%26moveunavailablelistingstothebottom%3dtrue%26pricerange.maxprice%3d1200%26pricerange.minprice%3d600">Nog geen account?</a>
                         </div>
                     </div>
                 </div>
@@ -2484,10 +1653,16 @@ appartement, Studentenkamer, wonen overig                            </li>
 <script type="text/javascript" src="/0-b52b/web-constanten"></script>
 <script src="https://kit.fontawesome.com/b295563224.js" crossorigin="anonymous"></script>
 
-<script src="//api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script><link href="//api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css" rel="stylesheet" /><script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDCuBcvsiCZYe5tpkWmd9Sj58xHlZqcbSA&amp;v=3.exp&amp;libraries=places&amp;language=nl&amp;callback=Function.prototype" ></script>
+
+            <link rel="preconnect" href="https://maps.googleapis.com">
+            <link rel="preconnect" href="https://maps.gstatic.com" crossorigin>
+            <link rel="preconnect" href="https://api.mapbox.com">
+            <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet" />
+            <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCuBcvsiCZYe5tpkWmd9Sj58xHlZqcbSA&libraries=places&language=nl&loading=async&v=weekly"></script>
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=explicit" async="async" defer="defer"></script>
 
-<script type="text/javascript" src="/cache/footer-nl-nl-199362F695E3D7D80C8F0293057AD93C47AA3929.js"></script>
+<script type="text/javascript" src="/cache/footer-nl-nl-755B062984A14378A6C4CA985967E706F5A29806.js"></script>
 
     <script>
     var locationTypeAdminAreaLevel1 = "AdminAreaLevel1";
@@ -2495,7 +1670,7 @@ appartement, Studentenkamer, wonen overig                            </li>
     var locationTypeLocality = "Locality";
     var locationTypeSublocality = "Sublocality";
     var locationTypeStreet = "Street";
-    var totalPropertyCount = 12;
+    var totalPropertyCount = 2;
     var propertyTypes = ['Residential','Commercial','Agricultural','Investment','Unspecified'];
 
     $(function() {

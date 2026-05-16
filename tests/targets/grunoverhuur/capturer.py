@@ -4,7 +4,7 @@ import time
 from targets.grunoverhuur import HttpRequestor
 from targets.target import TargetConfig
 
-config = TargetConfig(600, 1200, 20)
+config = TargetConfig(600, 1200, 40)
 requestor = HttpRequestor()
 
 capture_name = "gruno_verhuur_search_page_{}.html".format(math.floor(time.time()))

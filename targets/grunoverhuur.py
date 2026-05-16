@@ -4,7 +4,7 @@ import requests
 from lxml import html
 
 from model.model import Advertisement, AdvertisementState, Apartment
-from targets.target import TargetConfig, Target
+from targets.target import Target, TargetConfig
 
 
 class Capture:
@@ -30,8 +30,10 @@ class HttpRequestor(Requestor):
         return Capture(response.content.decode("utf-8"))
 
     def build_search_url(self, config):
-        return "https://www.grunoverhuur.nl/woningaanbod/huur?moveunavailablelistingstothebottom=true&pricerange.maxprice={max_price}&pricerange.minprice={min_price}".format(
-            min_price=config.min_price, max_price=config.max_price
+        return "https://www.grunoverhuur.nl/woningaanbod/huur/groningen?locationofinterest=Groningen&minlivablearea={min_surface}&pricerange.maxprice={max_price}&pricerange.minprice={min_price}".format(
+            min_surface=config.min_surface,
+            min_price=config.min_price,
+            max_price=config.max_price,
         )
 
 
@@ -77,7 +79,7 @@ class SearchExtractor:
         apartment.address = (
             node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
         )
-        apartment.city = "Groningen (probably)"
+        apartment.city = "Groningen"
         size_text = node.xpath(self._ADVERTISEMENT_SIZE)[0].strip()
         apartment.size = round(float(size_text.split(" ")[0].replace(",", ".")))
 
