@@ -6,7 +6,13 @@
   },
 
   "monitor_config": {
-    "interval": 1800,
-    "targets": [ "pandomo", "dcwonen" ]
+    "interval": 300,
+    "targets": [ 
+        "pandomo",
+        "dcwonen",
+        "kpmakelaars",
+        "pararius",
+        "grunoverhuur"
+    ]
   }
 }

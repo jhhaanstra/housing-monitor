@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import argparse
 import json
+import logging
 import os
+from logging import StreamHandler
 
 from monitor.monitor import Monitor
 from targets.target import TargetConfig
@@ -20,6 +22,13 @@ def setup_monitor(config_path: str):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        handlers=[logging.FileHandler("app.log"), StreamHandler()],
+    )
+
     parser = argparse.ArgumentParser(description="Process some integers.")
     parser.add_argument("--config", help="Monitoring config JSON file location")
     args = parser.parse_args()

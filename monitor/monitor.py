@@ -1,8 +1,13 @@
-from notifypy import Notify
-
-from model.model import Advertisement
+import logging
 from time import sleep
 
+from model.model import Advertisement
+from monitor.consumers import (
+    AdvertisementConsumer,
+    FileWritingConsumer,
+    LoggingConsumer,
+    NotifyingConsumer,
+)
 from targets.dcwonen import DcWonen
 from targets.grunoverhuur import GrunoVerhuur
 from targets.kpmakelaars import KpMakelaars
@@ -35,11 +40,16 @@ class Monitor:
     interval: int
     targets: list[Target]
     stored: list[str]
+    consumers: list[AdvertisementConsumer] = [
+        LoggingConsumer(),
+        FileWritingConsumer(),
+        NotifyingConsumer(),
+    ]
 
     def __init__(self, interval, targets, target_config) -> None:
         super().__init__()
         self.interval = interval
-        self.targets = [
+        self.targets: list[Target] = [
             TargetBuilder.build_target(target, target_config) for target in targets
         ]
         self.stored = []
@@ -50,36 +60,22 @@ class Monitor:
         while running:
             results: list[Advertisement] = self.run()
             for advertisement in results:
-                print("found advertisement")
-                self._send_notification(advertisement)
-                with open("advertisements.txt", "a") as f:
-                    f.write(advertisement.url)
-                sleep(self.interval)
+                for consumer in self.consumers:
+                    consumer.accept(advertisement)
 
-    @staticmethod
-    def _send_notification(advertisement: Advertisement):
-        title = "New advertisement found on: {target_name}.".format(
-            target_name=advertisement.url
-        )
-
-        description = "Price: {price} - Size: {size}".format(
-            price=advertisement.price, size=advertisement.apartment.size
-        )
-
-        print(title + " -- " + description)
-
-        notification = Notify()
-        notification.title = title
-        notification.message = description
-        notification.send()
+            sleep(self.interval)
 
     def run(self) -> list[Advertisement]:
         results: list[Advertisement] = list()
 
         for target in self.targets:
-            for advertisement in target.get_advertisements():
-                if advertisement.url not in self.stored:
-                    self.stored.append(advertisement.url)
-                    results.append(advertisement)
+            logging.info(f"fetching target: {target.name}")
+            try:
+                for advertisement in target.get_advertisements():
+                    if advertisement.url not in self.stored:
+                        self.stored.append(advertisement.url)
+                        results.append(advertisement)
+            except Exception as e:
+                logging.error(f"Something went wrong fetching target: {target}", e)
 
         return results
