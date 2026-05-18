@@ -1,9 +1,10 @@
-from abc import abstractmethod, ABC
+import re
+from abc import ABC, abstractmethod
 
 import requests
 from lxml import html
 
-from model.model import Advertisement, Apartment, AdvertisementState
+from model.model import Advertisement, AdvertisementState, Apartment
 from targets.target import Target, TargetConfig
 
 
@@ -30,22 +31,21 @@ class HttpRequestor(Requestor):
         return Capture(response.content.decode("utf-8"))
 
     def build_search_url(self, config):
-        return "https://www.pandomo.nl/huurwoningen/?filter-group-id=10&filter%5B39%5D={min_price}%2C{max_price}&filter[43]=19%2C{size}".format(
-            min_price=config.min_price,
-            max_price=config.max_price,
-            size=config.min_surface,
+        return "https://www.pandomo.nl/wonen/huur?weergave=grid&soort=&plaats=Groningen&prijs=&oppervlakte={min_surface}".format(
+            min_surface=config.min_surface,
         )
 
 
 class SearchExtractor:
     BASE_URL = "https://www.pandomo.nl"
 
-    _ADVERTISEMENT_BASE = "//li[@class='results__item']"
+    _ADVERTISEMENT_BASE = "//a[@class='card card--offer']"
+    _ADVERTISEMENT_POSTAL_CODE = ".//p[@class='card-offer_subtitle']"
     _ADVERTISEMENT_URL = ".//h3/a"
     _ADVERTISEMENT_DESCRIPTION = "./div/p"
-    _ADVERTISEMENT_PRICE = "./div[@class='results__item__content']/p/strong"
+    _ADVERTISEMENT_PRICE = ".//div[@class='card-offer__price']"
     _ADVERTISEMENT_LABEL = "./a/div/*[contains(@class, 'image__label')]"
-    _ADVERTISEMENT_SPECS = "./div/div[@class='results__item__info specs']/span[1]"
+    _ADVERTISEMENT_SURFACE = ".//div[@class='card-offer__bottom']/ul/li[1]/text()"
 
     capture: Capture
 
@@ -64,42 +64,31 @@ class SearchExtractor:
 
     def _advertisement_from_node(self, node: html.HtmlElement) -> Advertisement:
         advertisement = Advertisement()
-        advertisement.url = (
-            self.BASE_URL + node.xpath(self._ADVERTISEMENT_URL)[0].attrib["href"]
-        )
-        advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
-        advertisement.state = self._state_from_node(node)
-
+        advertisement.url = node.attrib["href"]
+        advertisement.price = self._price_from_node(node)
+        advertisement.state = AdvertisementState.AVAILABLE
         advertisement.apartment = self._apartment_from_node(node)
         return advertisement
 
-    def _state_from_node(self, node: html.HtmlElement) -> AdvertisementState:
-        label: str = node.xpath(self._ADVERTISEMENT_LABEL)[0].text.lower()
-        match label:
-            case "onder optie":
-                return AdvertisementState.UNDER_OPTION
-            case "verhuurd":
-                return AdvertisementState.UNAVAILABLE
-            case _:
-                return AdvertisementState.AVAILABLE
-
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
-        description: str = node.xpath(self._ADVERTISEMENT_DESCRIPTION)[0].text.replace(
-            "\n", ""
-        )
-        split: list[str] = description.replace("\n", "").split(" ")
-
-        title = node.xpath(self._ADVERTISEMENT_URL)[0]
-
-        apartment.address = title.attrib["title"]
-        apartment.postal_code = str.join("", split[0:2])
-        apartment.city = str.strip(str.join(" ", split[2::]).capitalize())
+        apartment.address = node.attrib["title"]
+        apartment.postal_code = node.xpath(self._ADVERTISEMENT_POSTAL_CODE)[0].text
+        apartment.city = "Groningen"
         apartment.size = int(
-            node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0]
+            node.xpath(self._ADVERTISEMENT_SURFACE)[1].strip().split(" ")[0]
         )
-
         return apartment
+
+    def _price_from_node(self, node: html.HtmlElement) -> str:
+        node_text = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
+        # Extract the first number-like pattern
+        match = re.search(r"([\d.,]+)", node_text)
+        if match:
+            value_str = match.group(1)  # "750,00"
+            return value_str.replace(".", "").replace(",", ".")
+        else:
+            raise ValueError(f"invalid price found {node_text}")
 
 
 class Pandomo(Target):
@@ -116,4 +105,9 @@ class Pandomo(Target):
     def get_advertisements(self) -> list[Advertisement]:
         capture: Capture = self.requestor.request_search_page(self.config)
         extractor = SearchExtractor(capture)
-        return extractor.get_advertisements()
+        return [
+            a
+            for a in extractor.get_advertisements()
+            if float(a.price) <= self.config.max_price
+            and float(a.price) >= self.config.min_price
+        ]
