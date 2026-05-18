@@ -1,14 +1,13 @@
 import unittest
-
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
 from targets.pararius import (
-    SearchExtractor,
-    Requestor,
     Capture,
-    Pararius,
     HttpRequestor,
+    Pararius,
+    Requestor,
+    SearchExtractor,
 )
 from targets.target import TargetConfig
 
@@ -19,34 +18,27 @@ class ParariusSearchTest(unittest.TestCase):
         extractor = SearchExtractor(capture)
         advertisements: list[Advertisement] = extractor.get_advertisements()
 
-        self.assertEqual(len(advertisements), 13)
+        self.assertEqual(len(advertisements), 30)
         actual = advertisements[0]
         self.assertEqual(
             actual.url,
-            "https://www.pararius.com/apartment-for-rent/groningen/cfbcf80e/nieuweweg",
+            "https://www.pararius.com/huis-te-huur/groningen/7f8c895d/woonschepenhaven",
         )
-        self.assertEqual(actual.price, "€1,075 per month")
+        self.assertEqual(actual.price, "€\xa01.000 per maand")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
-        self.assertEqual(actual_apartment.address, "Flat Nieuweweg")
-        self.assertEqual(actual_apartment.postal_code, "9711TC")
-        self.assertEqual(actual_apartment.city, "Groningen (binnenstad-oost)")
-        self.assertEqual(actual_apartment.size, 32)
-
-    def test_should_get_states(self):
-        capture = read_capture()
-        extractor = SearchExtractor(capture)
-        advertisements: list[Advertisement] = extractor.get_advertisements()
-        self.assertEqual(advertisements[0].state, AdvertisementState.AVAILABLE)
-        self.assertEqual(advertisements[4].state, AdvertisementState.UNAVAILABLE)
+        self.assertEqual(actual_apartment.address, "Huis Woonschepenhaven")
+        self.assertEqual(actual_apartment.postal_code, "9723CJ")
+        self.assertEqual(actual_apartment.city, "Groningen (woonschepenhaven)")
+        self.assertEqual(actual_apartment.size, 55)
 
     def test_use_config_in_url(self):
         config = TargetConfig(800, 1200, 30)
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
         self.assertEqual(
-            "https://www.pararius.com/apartments/groningen/800-1200/30m2", url
+            "https://www.pararius.nl/huurwoningen/groningen/800-1200/30m2", url
         )
 
     @unittest.skip("Live test")

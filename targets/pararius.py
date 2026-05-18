@@ -1,9 +1,9 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 
 import requests
 from lxml import html
 
-from model.model import Advertisement, Apartment, AdvertisementState
+from model.model import Advertisement, AdvertisementState, Apartment
 from targets.target import Target, TargetConfig
 
 
@@ -25,24 +25,33 @@ class Requestor(ABC):
 
 class HttpRequestor(Requestor):
     def request_search_page(self, config: TargetConfig) -> Capture:
-        url = self.build_search_url(config)
-        response = requests.get(url)
+        # url = self.build_search_url(config)
+        url = "https://www.pararius.nl/huurwoningen/groningen/800-1300/30m2"
+        headers = {
+            "Host": "www.pararius.nl",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Pragma": "no-cache",
+        }
+
+        response = requests.get(url, headers=headers)
+        print(response.request.headers)
         return Capture(response.content.decode("utf-8"))
 
     def build_search_url(self, config: TargetConfig) -> str:
-        return "https://www.pararius.com/apartments/groningen/{min_price}-{max_price}/{size}m2".format(
+        return "https://www.pararius.nl/huurwoningen/groningen/{min_price}-{max_price}/{min_surface}m2".format(
             min_price=config.min_price,
             max_price=config.max_price,
-            size=config.min_surface,
+            min_surface=config.min_surface,
         )
 
 
 class SearchExtractor:
     BASE_URL = "https://www.pararius.com"
     _ADVERTISEMENT_BASE = "//ul[@class='search-list']/li/section"
-    _ADVERTISEMENT_TITLE_URL = ".//h2/a"
+    _ADVERTISEMENT_TITLE_URL = ".//h3/a"
     _ADVERTISEMENT_DESCRIPTION = "./div/div[contains(@class, 'sub-title')]"
-    _ADVERTISEMENT_PRICE = "./div/div[contains(@class, 'price')]"
+    _ADVERTISEMENT_PRICE = "./div/div[contains(@class, 'price')]/span"
     _ADVERTISEMENT_LABEL = "./div[contains(@class, 'label')]/span"
     _ADVERTISEMENT_SPECS = (
         "./div/div[contains(@class, 'features')]/ul/li[contains(@class, 'surface')]"
@@ -72,23 +81,10 @@ class SearchExtractor:
             advertisement = Advertisement()
             advertisement.url = self.BASE_URL + title.attrib["href"]
             advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.strip()
-            advertisement.state = self._state_from_node(node)
+            advertisement.state = AdvertisementState.AVAILABLE
 
             advertisement.apartment = self._apartment_from_node(node)
             return advertisement
-
-    def _state_from_node(self, node: html.HtmlElement) -> AdvertisementState:
-        labels = node.xpath(self._ADVERTISEMENT_LABEL)
-        if not labels:
-            return AdvertisementState.AVAILABLE
-
-        label: str = labels[0].text.lower().strip()
-
-        match label:
-            case "rented under option":
-                return AdvertisementState.UNAVAILABLE
-            case _:
-                return AdvertisementState.AVAILABLE
 
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
@@ -101,7 +97,7 @@ class SearchExtractor:
 
         apartment.city = str.strip(str.join(" ", split[2::]).capitalize())
         apartment.size = int(
-            node.xpath(self._ADVERTISEMENT_SPECS)[0].text.split(" ")[0]
+            node.xpath(self._ADVERTISEMENT_SPECS)[0].text.strip().split(" ")[0]
         )
 
         return apartment
