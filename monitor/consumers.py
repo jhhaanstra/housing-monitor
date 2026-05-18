@@ -1,7 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
 
-from notifypy import Notify
+import pync
 
 from model.model import Advertisement
 
@@ -27,9 +27,4 @@ class FileWritingConsumer(AdvertisementConsumer):
 
 class NotifyingConsumer(AdvertisementConsumer):
     def accept(self, advertisement: Advertisement):
-        notification = Notify()
-        notification.title = f"New advertisement found on: {advertisement.url}."
-        notification.message = (
-            f"Price: {advertisement.price} - Size: {advertisement.size}"
-        )
-        notification.send(block=False)
+        pync.notify(f"Price: {advertisement.price} - Size: {advertisement.size}", title=f"New advertisement found on: {advertisement.url}.")
