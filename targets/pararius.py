@@ -34,7 +34,7 @@ class HttpRequestor(Requestor):
             "Pragma": "no-cache",
         }
 
-        response = requests.get(url, headers=headers, timeout=5)
+        response = requests.get(url, headers=headers, timeout=15)
         return Capture(response.content.decode("utf-8"))
 
     def build_search_url(self, config: TargetConfig) -> str:
