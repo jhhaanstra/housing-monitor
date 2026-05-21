@@ -71,7 +71,11 @@ class Monitor:
         for target in self.targets:
             logging.info(f"fetching target: {target.name}")
             try:
-                for advertisement in target.get_advertisements():
+                advertisements = target.get_advertisements()
+                logging.info(
+                    f"extracted {len(advertisements)} advertisement{('s' if len(advertisements) != 0 else '')} for target: {target}"
+                )
+                for advertisement in advertisements:
                     if advertisement.url not in self.stored:
                         self.stored.append(advertisement.url)
                         results.append(advertisement)
