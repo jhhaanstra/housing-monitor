@@ -24,6 +24,9 @@ class Target(ABC):
         self.config = config
         self.name = name
 
+    def __str__(self):
+        return self.name
+
     @abstractmethod
     def get_advertisements(self) -> list[Advertisement]:
         pass
