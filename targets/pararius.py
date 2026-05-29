@@ -1,3 +1,4 @@
+import re
 from abc import ABC, abstractmethod
 
 import requests
@@ -37,7 +38,8 @@ class HttpRequestor(Requestor):
         response = requests.get(url, headers=headers, timeout=15)
         return Capture(response.content.decode("utf-8"))
 
-    def build_search_url(self, config: TargetConfig) -> str:
+    @staticmethod
+    def build_search_url(config: TargetConfig) -> str:
         return "https://www.pararius.nl/huurwoningen/groningen/{min_price}-{max_price}/{min_surface}m2".format(
             min_price=config.min_price,
             max_price=config.max_price,
@@ -79,7 +81,7 @@ class SearchExtractor:
             title = node.xpath(self._ADVERTISEMENT_TITLE_URL)[0]
             advertisement = Advertisement()
             advertisement.url = self.BASE_URL + title.attrib["href"]
-            advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.strip()
+            advertisement.price = self._price_from_node(node)
             advertisement.state = AdvertisementState.AVAILABLE
 
             advertisement.apartment = self._apartment_from_node(node)
@@ -100,6 +102,16 @@ class SearchExtractor:
         )
 
         return apartment
+
+    def _price_from_node(self, node: html.HtmlElement) -> str:
+        node_text = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
+        # Extract the first number-like pattern
+        match = re.search(r"([\d.,]+)", node_text)
+        if match:
+            value_str = match.group(1)  # "750,00"
+            return value_str.replace(".", "").replace(",", ".")
+        else:
+            raise ValueError(f"invalid price found {node_text}")
 
 
 class Pararius(Target):

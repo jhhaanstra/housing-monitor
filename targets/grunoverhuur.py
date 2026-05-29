@@ -1,3 +1,4 @@
+import re
 from abc import ABC, abstractmethod
 
 import requests
@@ -29,7 +30,8 @@ class HttpRequestor(Requestor):
         response = requests.get(url, timeout=15)
         return Capture(response.content.decode("utf-8"))
 
-    def build_search_url(self, config):
+    @staticmethod
+    def build_search_url(config):
         return "https://www.grunoverhuur.nl/woningaanbod/huur/groningen?locationofinterest=Groningen&minlivablearea={min_surface}&pricerange.maxprice={max_price}&pricerange.minprice={min_price}".format(
             min_surface=config.min_surface,
             min_price=config.min_price,
@@ -63,7 +65,7 @@ class SearchExtractor:
     def _advertisement_from_node(self, node: html.HtmlElement) -> Advertisement:
         advertisement = Advertisement()
         advertisement.url = self._extract_url(node)
-        advertisement.price = node.xpath(self._ADVERTISEMENT_PRICE)[0].strip()
+        advertisement.price = self._price_from_node(node)
         advertisement.state = AdvertisementState.AVAILABLE
         advertisement.apartment = self._apartment_from_node(node)
         return advertisement
@@ -84,6 +86,15 @@ class SearchExtractor:
         apartment.size = round(float(size_text.split(" ")[0].replace(",", ".")))
 
         return apartment
+
+    def _price_from_node(self, node: html.HtmlElement) -> str:
+        node_text = str(node.xpath(self._ADVERTISEMENT_PRICE)[0]).strip().split(',')[0].replace('.', '')
+        # Extract the first number-like pattern
+        match = re.search(r"([\d.,]+)", node_text)
+        if match:  # "750,00"
+            return match.group(1)
+        else:
+            raise ValueError(f"invalid price found {node_text}")
 
 
 class GrunoVerhuur(Target):
