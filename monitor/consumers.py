@@ -15,7 +15,7 @@ class AdvertisementConsumer(ABC):
 class LoggingConsumer(AdvertisementConsumer):
     def accept(self, advertisement: Advertisement):
         logging.info(
-            f"New advertisement found on: {advertisement.url} -- Price: {advertisement.price} - Size: {advertisement.size}"
+            f"New advertisement found: price: €{advertisement.price:>4} - size: {advertisement.apartment.size:>3}m² -- {advertisement.url}"
         )
 
 
@@ -28,8 +28,9 @@ class FileWritingConsumer(AdvertisementConsumer):
 class NotifyingConsumer(AdvertisementConsumer):
     def accept(self, advertisement: Advertisement):
         notification = Notify()
-        notification.title = f"New advertisement found on: {advertisement.url}."
+        notification.title = f"New advertisement: {advertisement.apartment.address}"
         notification.message = (
-            f"Price: {advertisement.price} - Size: {advertisement.size}"
+            f"Price: {advertisement.price} - Size: {advertisement.apartment.size}\n"
+            f"{advertisement.url}"
         )
         notification.send(block=False)
