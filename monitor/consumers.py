@@ -28,9 +28,11 @@ class FileWritingConsumer(AdvertisementConsumer):
 class NotifyingConsumer(AdvertisementConsumer):
     def accept(self, advertisement: Advertisement):
         notification = Notify()
-        notification.title = f"New advertisement: {advertisement.apartment.address}"
+        notification.application_name = "Housing monitor"
+        notification.title = f"New: {advertisement.apartment.address}"
         notification.message = (
             f"Price: {advertisement.price} - Size: {advertisement.apartment.size}\n"
             f"{advertisement.url}"
         )
+        notification.icon = "monitor/monitor.png"
         notification.send(block=False)
