@@ -17,7 +17,7 @@ class PandomoSearchTest(unittest.TestCase):
         self.assertEqual(
             actual.url, "https://www.pandomo.nl/wonen/object/stalstraat-66-groningen/"
         )
-        self.assertEqual(actual.price, "2200.")
+        self.assertEqual(actual.price, "2200")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
@@ -31,7 +31,7 @@ class PandomoSearchTest(unittest.TestCase):
         requestor = HttpRequestor()
         url = requestor.build_search_url(config)
         self.assertEqual(
-            "https://www.pandomo.nl/wonen/huur?weergave=grid&soort=&plaats=Groningen&prijs=&oppervlakte=30",
+            "https://www.pandomo.nl/woningaanbod/huur/?weergave=grid&soort=&plaats=Groningen&prijs=1200&oppervlakte=30",
             url,
         )
 
@@ -41,7 +41,7 @@ class PandomoTest(unittest.TestCase):
         config = TargetConfig(2190, 3000, 30)
         pandomo = Pandomo(config, requestor=TestRequestor())
         prices = [advertisement.price for advertisement in pandomo.get_advertisements()]
-        self.assertEqual(["2200.", "2900.", "2195."], prices)
+        self.assertEqual(["2200", "2900", "2195"], prices)
 
     @unittest.skip("Live test")
     def test_pandomo_live(self):

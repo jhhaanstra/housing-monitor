@@ -24,7 +24,7 @@ class KpMakelaarsSearchTest(unittest.TestCase):
         self.assertEqual(
             actual.url, "https://www.kpmakelaars.nl/woning/Groningen-Aweg-H00250255"
         )
-        self.assertEqual(actual.price, "€895,- \/mnd (incl)")
+        self.assertEqual(actual.price, "895")
         self.assertEqual(actual.state, AdvertisementState.UNAVAILABLE)
 
         actual_apartment = actual.apartment

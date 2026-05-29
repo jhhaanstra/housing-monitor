@@ -24,7 +24,7 @@ class ParariusSearchTest(unittest.TestCase):
             actual.url,
             "https://www.pararius.com/huis-te-huur/groningen/7f8c895d/woonschepenhaven",
         )
-        self.assertEqual(actual.price, "€\xa01.000 per maand")
+        self.assertEqual(actual.price, "1000")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
