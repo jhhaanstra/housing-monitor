@@ -75,15 +75,22 @@ class SearchExtractor:
         apartment = Apartment()
         apartment.address = node.xpath(self._ADVERTISEMENT_ADDRESS)[0].text.strip()
         apartment.city = node.xpath(self._ADVERTISEMENT_CITY)[0].text.strip()
-        apartment.size = int(node.xpath(self._ADVERTISEMENT_SURFACE)[2].text.strip().split("m²")[0])
+        apartment.size = int(
+            node.xpath(self._ADVERTISEMENT_SURFACE)[2].text.strip().split("m²")[0]
+        )
         return apartment
 
     def _price_from_node(self, node: html.HtmlElement) -> str:
-        node_text = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.strip().split(',')[0].replace('.', '')
+        node_text = (
+            node.xpath(self._ADVERTISEMENT_PRICE)[0]
+            .text.strip()
+            .split(",")[0]
+            .replace(".", "")
+        )
         # Extract the first number-like pattern
         match = re.search(r"([\d.,]+)", node_text)
         if match:
-            return match.group(1).split(',')[0]  # "750,00"
+            return match.group(1).split(",")[0]  # "750,00"
         else:
             raise ValueError(f"invalid price found {node_text}")
 

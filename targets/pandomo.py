@@ -83,7 +83,12 @@ class SearchExtractor:
         return apartment
 
     def _price_from_node(self, node: html.HtmlElement) -> str:
-        node_text = node.xpath(self._ADVERTISEMENT_PRICE)[0].text.strip().split(',')[0].replace('.', '')
+        node_text = (
+            node.xpath(self._ADVERTISEMENT_PRICE)[0]
+            .text.strip()
+            .split(",")[0]
+            .replace(".", "")
+        )
         # Extract the first number-like pattern
         match = re.search(r"([\d.,]+)", node_text)
         if match:

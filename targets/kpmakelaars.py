@@ -72,7 +72,9 @@ class SearchExtractor:
             )
         )
         _advertisement.state = self._extract_state(advertisement["front_status"])
-        _advertisement.price = advertisement["set_price"].replace('.', '').split(",-")[0]
+        _advertisement.price = (
+            advertisement["set_price"].replace(".", "").split(",-")[0]
+        )
         _advertisement.apartment = self._apartment_from_node(advertisement)
         return _advertisement
 
