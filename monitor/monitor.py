@@ -13,6 +13,7 @@ from targets.grunoverhuur import GrunoVerhuur
 from targets.kpmakelaars import KpMakelaars
 from targets.pandomo import Pandomo
 from targets.pararius import Pararius
+from targets.eentweedriewonen import EenTweeDrieWonen
 from targets.target import Target, TargetConfig
 
 
@@ -30,6 +31,8 @@ class TargetBuilder:
                 return Pararius(target_config)
             case "grunoverhuur":
                 return GrunoVerhuur(target_config)
+            case "123wonen":
+                return EenTweeDrieWonen(target_config)
             case _:
                 raise ValueError(
                     target + " is not a valid target, please update the config"
@@ -73,7 +76,7 @@ class Monitor:
             try:
                 advertisements = target.get_advertisements()
                 logging.info(
-                    f"extracted {len(advertisements)} advertisement{('s' if len(advertisements) != 0 else '')} for target: {target}"
+                    f"extracted {len(advertisements)} advertisement{('s' * (len(advertisements) != 1))} for target: {target}"
                 )
                 for advertisement in advertisements:
                     if advertisement.url not in self.stored:
