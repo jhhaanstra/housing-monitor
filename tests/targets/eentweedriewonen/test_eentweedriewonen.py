@@ -29,7 +29,7 @@ class EenTweeDrieWonenSearchTest(unittest.TestCase):
         self.assertEqual(actual_apartment.address, "Bordewijklaan")
         self.assertEqual(actual_apartment.city, "Groningen")
 
-    # @unittest.skip("Live test")
+    @unittest.skip("Live test")
     def test_eentweedrie_wonen_live(self):
         config = TargetConfig(700, 2000, 30)
         eentweedrie_wonen = EenTweeDrieWonen(config, requestor=HttpRequestor())
