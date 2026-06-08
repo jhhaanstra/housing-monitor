@@ -1,5 +1,4 @@
 import unittest
-from abc import ABC
 from importlib import resources
 
 from model.model import Advertisement, AdvertisementState
@@ -55,7 +54,7 @@ class TestEenTweeDrieWonen(unittest.TestCase):
         self.assertEqual(["1110", "1097", "1077"], prices)
 
 
-class TestRequestor(ABC):
+class TestRequestor(Requestor):
     def request_search_page(self, config: TargetConfig) -> Capture:
         return read_capture()
 
