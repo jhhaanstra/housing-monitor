@@ -78,9 +78,12 @@ class SearchExtractor:
     def _apartment_from_node(self, node: html.HtmlElement) -> Apartment:
         apartment = Apartment()
 
-        apartment.address = (
-            node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
-        )
+        try:
+            apartment.address = (
+                node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
+            )
+        except IndexError:
+            apartment.address = ""
         apartment.city = "Groningen"
         size_text = node.xpath(self._ADVERTISEMENT_SIZE)[0].strip()
         apartment.size = round(float(size_text.split(" ")[0].replace(",", ".")))
