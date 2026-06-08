@@ -26,8 +26,7 @@ class Requestor(ABC):
 
 class HttpRequestor(Requestor):
     def request_search_page(self, config: TargetConfig) -> Capture:
-        # url = self.build_search_url(config)
-        url = "https://www.pararius.nl/huurwoningen/groningen/800-1300/30m2"
+        url = self.build_search_url(config)
         headers = {
             "Host": "www.pararius.nl",
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0",
