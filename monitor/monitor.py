@@ -1,6 +1,8 @@
 import logging
 from time import sleep
 
+from requests import ReadTimeout
+
 from model.model import Advertisement
 from monitor.consumers import (
     AdvertisementConsumer,
@@ -85,6 +87,8 @@ class Monitor:
                     if advertisement.url not in self.stored:
                         self.stored.append(advertisement.url)
                         results.append(advertisement)
+            except ReadTimeout:
+                logging.error(f"Could not fetch target {target!r} in time.")
             except Exception as e:
                 logging.error(f"Something went wrong fetching target: {target}", e)
 
