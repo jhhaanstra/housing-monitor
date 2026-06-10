@@ -86,7 +86,10 @@ class Monitor:
                         results.append(advertisement)
             except ReadTimeout:
                 logging.error(f"Could not fetch target {target.name!r} in time.")
+            except ConnectionError:
+                logging.error(f"Error when connecting with target {target.name!r}.")
             except Exception as e:
-                logging.error(f"Something went wrong fetching target: {target.name!r}", e)
+                logging.error(f"Something went wrong fetching target: {target.name!r}")
+                logging.exception(e)
 
         return results
