@@ -52,7 +52,7 @@ class SearchExtractor:
     _ADVERTISEMENT_BASE = "//div[@class='pandlist-container ']"
     _ADVERTISEMENT_URL = "./div/div/a"
     _ADVERTISEMENT_PRICE = "./div[@class='pand-price']/text()"
-    _ADVERTISEMENT_SIZE = ".//div[@class='pand-specs']/ul/li[5]/span[2]/text()"
+    _ADVERTISEMENT_SIZE = ".//span[contains(text(), 'Woonoppervlakte')]/following-sibling::span[1]/text()"
     _ADVERTISEMENT_ADDRESS = ".//span[@class='pand-address']/text()"
     _ADVERTISEMENT_CITY = ".//div[@class='pand-title']/text()"
     _BASE_URL = "https://www.grunoverhuur.nl"
