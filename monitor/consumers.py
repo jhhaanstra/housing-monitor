@@ -34,5 +34,5 @@ class NotifyingConsumer(AdvertisementConsumer):
             f"Price: {advertisement.price} - Size: {advertisement.apartment.size}\n"
             f"{advertisement.url}"
         )
-        notification.icon = "monitor/monitor.png"
+        notification.icon = "monitor/resources/notification.svg"
         notification.send(block=False)

@@ -80,7 +80,9 @@ class SearchExtractor:
 
         try:
             apartment.address = (
-                node.xpath(self._ADVERTISEMENT_ADDRESS)[0].strip().replace("Te huur: ", "")
+                node.xpath(self._ADVERTISEMENT_ADDRESS)[0]
+                .strip()
+                .replace("Te huur: ", "")
             )
         except IndexError:
             apartment.address = ""
