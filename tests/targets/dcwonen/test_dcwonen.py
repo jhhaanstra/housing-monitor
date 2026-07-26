@@ -21,7 +21,7 @@ class DcWonenSearchTest(unittest.TestCase):
         self.assertEqual(len(advertisements), 5)
         actual = advertisements[0]
         self.assertEqual(actual.url, "https://dcwonen.nl/verhuur/j-a-feithstraat-2")
-        self.assertEqual(actual.price, "750.00")
+        self.assertEqual(actual.price, "750")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment
@@ -51,7 +51,7 @@ class TestDcWonen(unittest.TestCase):
         prices = [
             advertisement.price for advertisement in dc_wonen.get_advertisements()
         ]
-        self.assertEqual(["750.00", "628.50", "1255.00"], prices)
+        self.assertEqual(["750", "628", "1255"], prices)
 
 
 class TestRequestor(Requestor):

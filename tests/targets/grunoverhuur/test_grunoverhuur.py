@@ -24,7 +24,7 @@ class GrunoVerhuurSearchTest(unittest.TestCase):
             actual.url,
             "https://www.grunoverhuur.nl/woningaanbod/huur/groningen/tweede-willemstraat/8-c",
         )
-        self.assertEqual(actual.price, "€ 1.157,07 /mnd")
+        self.assertEqual(actual.price, "1157")
         self.assertEqual(actual.state, AdvertisementState.AVAILABLE)
 
         actual_apartment = actual.apartment

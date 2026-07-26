@@ -2,7 +2,6 @@ import json
 from abc import abstractmethod, ABC
 
 import requests
-from lxml import html
 
 from model.model import Advertisement, Apartment, AdvertisementState
 from targets.target import Target, TargetConfig
@@ -42,7 +41,8 @@ class HttpRequestor(Requestor):
 
         return Capture(response.content.decode("utf-8"))
 
-    def build_search_query(self, config: TargetConfig):
+    @staticmethod
+    def build_search_query(config: TargetConfig):
         return "min_price={min_price}&max_price={max_price}&min_area={size}".format(
             min_price=config.min_price,
             max_price=config.max_price,
@@ -72,18 +72,22 @@ class SearchExtractor:
             )
         )
         _advertisement.state = self._extract_state(advertisement["front_status"])
-        _advertisement.price = "€" + advertisement["set_price"]
+        _advertisement.price = (
+            advertisement["set_price"].replace(".", "").split(",-")[0]
+        )
         _advertisement.apartment = self._apartment_from_node(advertisement)
         return _advertisement
 
-    def _extract_state(self, state: str):
+    @staticmethod
+    def _extract_state(state: str):
         return (
             AdvertisementState.AVAILABLE
             if not state
             else AdvertisementState.UNAVAILABLE
         )
 
-    def _apartment_from_node(self, advertisement) -> Apartment:
+    @staticmethod
+    def _apartment_from_node(advertisement) -> Apartment:
         apartment = Apartment()
         apartment.address = (
             advertisement["street"]

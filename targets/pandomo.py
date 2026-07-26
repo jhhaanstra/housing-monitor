@@ -30,8 +30,10 @@ class HttpRequestor(Requestor):
         response = requests.get(url, timeout=15)
         return Capture(response.content.decode("utf-8"))
 
-    def build_search_url(self, config):
-        return "https://www.pandomo.nl/wonen/huur?weergave=grid&soort=&plaats=Groningen&prijs=&oppervlakte={min_surface}".format(
+    @staticmethod
+    def build_search_url(config):
+        return "https://www.pandomo.nl/woningaanbod/huur/?weergave=grid&soort=&plaats=Groningen&prijs={max_price}&oppervlakte={min_surface}".format(
+            max_price=config.max_price,
             min_surface=config.min_surface,
         )
 
@@ -81,7 +83,12 @@ class SearchExtractor:
         return apartment
 
     def _price_from_node(self, node: html.HtmlElement) -> str:
-        node_text = node.xpath(self._ADVERTISEMENT_PRICE)[0].text
+        node_text = (
+            node.xpath(self._ADVERTISEMENT_PRICE)[0]
+            .text.strip()
+            .split(",")[0]
+            .replace(".", "")
+        )
         # Extract the first number-like pattern
         match = re.search(r"([\d.,]+)", node_text)
         if match:
@@ -108,6 +115,5 @@ class Pandomo(Target):
         return [
             a
             for a in extractor.get_advertisements()
-            if float(a.price) <= self.config.max_price
-            and float(a.price) >= self.config.min_price
+            if self.config.max_price >= float(a.price) >= self.config.min_price
         ]

@@ -1,6 +1,8 @@
 import logging
 from time import sleep
 
+from requests import ReadTimeout
+
 from model.model import Advertisement
 from monitor.consumers import (
     AdvertisementConsumer,
@@ -73,13 +75,18 @@ class Monitor:
             try:
                 advertisements = target.get_advertisements()
                 logging.info(
-                    f"extracted {len(advertisements)} advertisement{('s' if len(advertisements) != 0 else '')} for target: {target}"
+                    f"extracted {len(advertisements)} advertisement{('s' * (len(advertisements) != 1))} for target: {target.name}"
                 )
                 for advertisement in advertisements:
                     if advertisement.url not in self.stored:
                         self.stored.append(advertisement.url)
                         results.append(advertisement)
+            except ReadTimeout:
+                logging.error(f"Could not fetch target {target.name!r} in time.")
+            except ConnectionError:
+                logging.error(f"Error when connecting with target {target.name!r}.")
             except Exception as e:
-                logging.error(f"Something went wrong fetching target: {target}", e)
+                logging.error(f"Something went wrong fetching target: {target.name!r}")
+                logging.exception(e)
 
         return results
