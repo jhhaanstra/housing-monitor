@@ -15,6 +15,7 @@ from targets.grunoverhuur import GrunoVerhuur
 from targets.kpmakelaars import KpMakelaars
 from targets.pandomo import Pandomo
 from targets.pararius import Pararius
+from targets.eentweedriewonen import EenTweeDrieWonen
 from targets.target import Target, TargetConfig
 
 
@@ -32,6 +33,8 @@ class TargetBuilder:
                 return Pararius(target_config)
             case "grunoverhuur":
                 return GrunoVerhuur(target_config)
+            case "123wonen":
+                return EenTweeDrieWonen(target_config)
             case _:
                 raise ValueError(
                     target + " is not a valid target, please update the config"
