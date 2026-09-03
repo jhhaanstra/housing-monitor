@@ -8,11 +8,13 @@
   "monitor_config": {
     "interval": 300,
     "targets": [ 
-        "pandomo",
-        "dcwonen",
-        "kpmakelaars",
-        "pararius",
-        "grunoverhuur"
+      "pandomo",
+      "dcwonen",
+      "kpmakelaars",
+      "pararius",
+      "grunoverhuur",
+      "123wonen",
+      "vandermeulen"
     ]
   }
 }
